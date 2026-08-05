@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PLAYCE V1
 
-## Getting Started
+**The Digital Infrastructure of Sport** — Where Sport Meets Opportunity.
 
-First, run the development server:
+Plateforme omnisports (Sports ID, réseau social, opportunités, messagerie, admin) construite avec **Next.js 16**, **Tailwind CSS** et **Supabase** (mode démo intégré).
+
+## Démarrage rapide
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvrir [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Le **mode démo** est activé par défaut (`NEXT_PUBLIC_DEMO_MODE=true`) : aucune clé Supabase n'est requise. Les données sont persistées dans `localStorage`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Comptes démo
 
-## Learn More
+| Email | Rôle |
+|-------|------|
+| amine@playce.demo | Athlète |
+| sofia@playce.demo | Athlète |
+| recrutement@asc.demo | Club |
+| marc@scout.demo | Scout |
+| lea@coach.demo | Coach |
+| kevin@playce.demo | Athlète |
+| admin@playce.demo | Admin |
 
-To learn more about Next.js, take a look at the following resources:
+Sur `/auth/login`, cliquez sur un utilisateur pour basculer instantanément.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Frontend** : Next.js App Router, TypeScript, Tailwind CSS v4, Lucide icons
+- **Design** : charte PLAYCE (dark `#0F172A`, teal `#00B894`, Sora + Inter)
+- **Backend** : Supabase (Auth, PostgreSQL + RLS, Storage, Realtime) — schéma dans `supabase/schema.sql`
+- **i18n** : FR / EN
+- **PWA** : `manifest.webmanifest`
 
-## Deploy on Vercel
+## Connexion Supabase (production)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Créer un projet sur [supabase.com](https://supabase.com)
+2. Exécuter `supabase/schema.sql` dans le SQL Editor
+3. Créer les buckets Storage : `avatars`, `covers`, `posts`, `media`
+4. Copier `.env.local.example` → `.env.local` et renseigner :
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
+SUPABASE_SERVICE_ROLE_KEY=eyJ...
+NEXT_PUBLIC_DEMO_MODE=false
+NEXT_PUBLIC_APP_URL=https://votre-domaine.com
+```
+
+5. Activer Google / Apple OAuth dans Supabase Auth (optionnel)
+
+## Modules livrés (V1)
+
+| Module | Statut |
+|--------|--------|
+| Auth + choix rôle/sport | ✅ |
+| Onboarding + score de complétude | ✅ |
+| Sports ID (profil, stats, médias, QR, URL publique `/p/[handle]`) | ✅ |
+| Feed social (posts, likes, commentaires, hashtags) | ✅ |
+| Opportunités (offres/demandes, filtres, candidature, matching) | ✅ |
+| Recherche universelle | ✅ |
+| Messagerie 1:1 | ✅ |
+| Notifications | ✅ |
+| Reels (swipe vertical) | ✅ |
+| Back-office admin (KPI, users, signalements, CSV) | ✅ |
+| RGPD (export JSON, suppression compte) | ✅ |
+| i18n FR/EN | ✅ |
+| PWA manifest | ✅ |
+
+## Navigation mobile
+
+Home · Opportunities · Publish · Reels · Profile
+
+## Structure
+
+```
+src/
+  app/           # Pages App Router
+  components/    # UI, layout, feed, cards
+  lib/           # types, utils, demo-store, supabase, i18n
+  messages/      # fr.json / en.json
+supabase/
+  schema.sql     # Schéma complet + RLS + seeds football
+```
+
+## Scripts
+
+```bash
+npm run dev      # Développement
+npm run build    # Build production
+npm run start    # Serveur production
+npm run lint     # ESLint
+```
+
+## Critère V1
+
+Parcours athlète et club de bout en bout : inscription → Sports ID → feed → opportunité → candidature → message → notification → modération admin.
+
+---
+
+© PLAYCE — Talent is everywhere. Opportunity isn't.
