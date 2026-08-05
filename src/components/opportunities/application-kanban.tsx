@@ -6,6 +6,7 @@ import type { Application, ApplicationStatus } from "@/lib/types";
 import { useI18n } from "@/lib/i18n";
 import { Avatar, Badge, Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Select } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 const COLUMNS: ApplicationStatus[] = [
@@ -51,16 +52,66 @@ export function ApplicationKanban({
     );
   }
 
+  const statusOptions = COLUMNS.map((s) => ({
+    value: s,
+    label: t(`opportunities.statusLabels.${s}`),
+  }));
+
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <h2 className="font-display font-semibold">
         {t("opportunities.pipeline")} ({applications.length})
       </h2>
-      <div className="-mx-4 flex gap-3 overflow-x-auto px-4 pb-2">
+
+      {/* Mobile: liste + select */}
+      <div className="space-y-3 md:hidden">
+        {applications.map((a) => (
+          <Card key={a.id} className="space-y-3 p-4">
+            <div className="flex items-center gap-3">
+              <Avatar
+                src={a.applicant?.avatar_url}
+                name={a.applicant?.full_name ?? "?"}
+              />
+              <div className="min-w-0 flex-1">
+                <Link
+                  href={`/p/${a.applicant?.handle}`}
+                  className="block truncate font-medium hover:text-playce-teal"
+                >
+                  {a.applicant?.full_name}
+                </Link>
+                <p className="truncate text-xs text-slate-muted">
+                  {a.message || "—"}
+                </p>
+              </div>
+            </div>
+            <Select
+              label={t("opportunities.status")}
+              value={a.status}
+              onChange={(e) =>
+                onStatusChange(a.id, e.target.value as ApplicationStatus)
+              }
+              options={statusOptions}
+            />
+            {onMessage && a.applicant_id && (
+              <Button
+                size="sm"
+                variant="outline"
+                className="w-full"
+                onClick={() => onMessage(a.applicant_id)}
+              >
+                {t("common.message")}
+              </Button>
+            )}
+          </Card>
+        ))}
+      </div>
+
+      {/* Desktop: kanban */}
+      <div className="-mx-4 hidden gap-3 overflow-x-auto px-4 pb-2 md:flex">
         {COLUMNS.map((status) => (
           <div
             key={status}
-            className="w-64 shrink-0 rounded-2xl border border-white/10 bg-playce-black/40 p-2"
+            className="w-64 shrink-0 rounded-2xl border border-white/10 bg-surface/60 p-2"
             onDragOver={(e) => e.preventDefault()}
             onDrop={(e) => {
               e.preventDefault();
@@ -106,38 +157,25 @@ export function ApplicationKanban({
                       </p>
                     </div>
                   </div>
-                  <div className="flex flex-wrap gap-1">
-                    {COLUMNS.filter((s) => s !== status)
-                      .slice(0, 3)
-                      .map((s) => (
-                        <Button
-                          key={s}
-                          size="sm"
-                          variant="ghost"
-                          className="h-7 px-2 text-[10px]"
-                          onClick={() => onStatusChange(a.id, s)}
-                        >
-                          {t(`opportunities.statusLabels.${s}`)}
-                        </Button>
-                      ))}
-                    {onMessage && a.applicant_id && (
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="h-7 px-2 text-[10px]"
-                        onClick={() => onMessage(a.applicant_id)}
-                      >
-                        {t("common.message")}
-                      </Button>
-                    )}
-                  </div>
+                  {onMessage && a.applicant_id && (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="h-7 w-full px-2 text-[10px]"
+                      onClick={() => onMessage(a.applicant_id)}
+                    >
+                      {t("common.message")}
+                    </Button>
+                  )}
                 </Card>
               ))}
             </div>
           </div>
         ))}
       </div>
-      <p className="text-[10px] text-slate-muted">{t("opportunities.kanbanHint")}</p>
+      <p className="hidden text-[10px] text-slate-muted md:block">
+        {t("opportunities.kanbanHint")}
+      </p>
     </div>
   );
 }

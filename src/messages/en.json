@@ -62,7 +62,10 @@
     "opportunities": "Opportunities",
     "publish": "Publish",
     "reels": "Reels",
-    "profile": "Profile"
+    "profile": "Profile",
+    "search": "Search",
+    "notifications": "Notifications",
+    "messages": "Messages"
   },
   "feed": {
     "title": "Feed",

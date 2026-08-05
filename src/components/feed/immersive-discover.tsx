@@ -10,6 +10,7 @@ import {
   Sparkles,
   Briefcase,
   ChevronUp,
+  Bell,
 } from "lucide-react";
 import { useDemo } from "@/lib/demo-store";
 import { useI18n } from "@/lib/i18n";
@@ -29,14 +30,27 @@ export function ImmersiveDiscover() {
     toggleLike,
     awardSignal,
     getMatchScore,
+    notifications,
+    conversations,
   } = useDemo();
   const { locale, t } = useI18n();
   const router = useRouter();
   const [index, setIndex] = useState(0);
   const [expanded, setExpanded] = useState(false);
   const [animKey, setAnimKey] = useState(0);
+  const [showHint, setShowHint] = useState(true);
   const touchY = useRef<number | null>(null);
+  const lastSwipe = useRef(0);
   const discovered = useRef(0);
+
+  const unreadMsgs = auth.user
+    ? conversations
+        .filter((c) => c.participant_ids.includes(auth.user!.id))
+        .reduce((sum, c) => sum + (c.unread_count ?? 0), 0)
+    : 0;
+  const unreadNotif = auth.user
+    ? notifications.filter((n) => n.user_id === auth.user!.id && !n.read).length
+    : 0;
 
   const feed = useMemo(
     () =>
@@ -63,10 +77,14 @@ export function ImmersiveDiscover() {
   }, [index]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const go = (dir: 1 | -1) => {
+    const now = Date.now();
+    if (now - lastSwipe.current < 350) return;
+    lastSwipe.current = now;
+    setShowHint(false);
     setIndex((i) => {
       const next = i + dir;
       if (next < 0) return 0;
-      if (next >= feed.length) return 0; // loop for addiction
+      if (next >= feed.length) return i; // stop at end
       return next;
     });
   };
@@ -88,12 +106,12 @@ export function ImmersiveDiscover() {
       onTouchEnd={(e) => {
         if (touchY.current == null) return;
         const dy = touchY.current - e.changedTouches[0].clientY;
-        if (dy > 48) go(1);
-        if (dy < -48) go(-1);
+        if (dy > 64) go(1);
+        if (dy < -64) go(-1);
         touchY.current = null;
       }}
       onWheel={(e) => {
-        if (Math.abs(e.deltaY) < 25) return;
+        if (Math.abs(e.deltaY) < 40) return;
         go(e.deltaY > 0 ? 1 : -1);
       }}
     >
@@ -109,7 +127,33 @@ export function ImmersiveDiscover() {
             </p>
           </div>
         </div>
-        <SignalHud compact />
+        <div className="flex items-center gap-1.5">
+          <Link
+            href="/notifications"
+            className="relative rounded-full bg-black/35 p-2 backdrop-blur"
+            aria-label="Notifications"
+          >
+            <Bell className="h-5 w-5" />
+            {unreadNotif > 0 && (
+              <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-playce-teal px-1 text-[9px] font-bold text-playce-black">
+                {unreadNotif}
+              </span>
+            )}
+          </Link>
+          <Link
+            href="/messages"
+            className="relative rounded-full bg-black/35 p-2 backdrop-blur"
+            aria-label="Messages"
+          >
+            <MessageCircle className="h-5 w-5" />
+            {unreadMsgs > 0 && (
+              <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-playce-teal px-1 text-[9px] font-bold text-playce-black">
+                {unreadMsgs}
+              </span>
+            )}
+          </Link>
+          <SignalHud compact />
+        </div>
       </div>
 
       <div key={animKey} className="animate-slide-card absolute inset-0">
@@ -138,24 +182,24 @@ export function ImmersiveDiscover() {
         />
       </div>
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-28 z-20 flex flex-col items-center gap-1 text-white/40 md:bottom-10">
-        <ChevronUp className="h-4 w-4 animate-bounce" />
-        <span className="text-[10px] tracking-widest uppercase">
-          {locale === "fr" ? "Glisse" : "Swipe"}
-        </span>
-      </div>
+      {showHint && (
+        <div className="pointer-events-none absolute inset-x-0 bottom-28 z-20 flex flex-col items-center gap-1 text-white/40 md:bottom-10">
+          <ChevronUp className="h-4 w-4 animate-bounce" />
+          <span className="text-[10px] tracking-widest uppercase">
+            {locale === "fr" ? "Glisse" : "Swipe"}
+          </span>
+        </div>
+      )}
 
-      {/* progress dots */}
-      <div className="absolute right-3 top-1/2 z-20 flex -translate-y-1/2 flex-col gap-1.5">
-        {feed.slice(0, 8).map((_, i) => (
+      <div className="absolute right-3 top-1/2 z-20 flex -translate-y-1/2 flex-col gap-1">
+        <div className="h-16 w-1 overflow-hidden rounded-full bg-white/15">
           <div
-            key={i}
-            className={cn(
-              "w-1 rounded-full transition-all",
-              i === index % 8 ? "h-6 bg-playce-teal" : "h-1.5 bg-white/25"
-            )}
+            className="w-full rounded-full bg-playce-teal transition-all duration-300"
+            style={{
+              height: `${feed.length ? ((index + 1) / feed.length) * 100 : 0}%`,
+            }}
           />
-        ))}
+        </div>
       </div>
     </div>
   );

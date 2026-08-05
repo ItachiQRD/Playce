@@ -168,15 +168,17 @@ h4,
   );
 }
 
-/* Mobile chat: fits screen above floating nav */
+/* Chat: full viewport on mobile (top + bottom nav hidden); desktop under TopBar */
 .chat-shell {
-  height: calc(100dvh - 3.5rem);
-  max-height: calc(100dvh - 3.5rem);
+  height: 100dvh;
+  max-height: 100dvh;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-@media (max-width: 767px) {
+@media (min-width: 768px) {
   .chat-shell {
-    height: calc(100dvh - 3.5rem - var(--nav-offset));
-    max-height: calc(100dvh - 3.5rem - var(--nav-offset));
+    height: calc(100dvh - 3.5rem);
+    max-height: calc(100dvh - 3.5rem);
+    padding-bottom: 0;
   }
 }

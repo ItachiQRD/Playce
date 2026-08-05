@@ -8,6 +8,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isPulseMobile = pathname === "/feed";
   const isReels = pathname.startsWith("/reels");
+  const isChat = /^\/messages\/[^/]+$/.test(pathname);
   const isBare =
     pathname === "/" ||
     pathname.startsWith("/auth") ||
@@ -26,7 +27,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <main
           className={cn(
             "flex-1 bg-playce-dark",
-            isPulseMobile || isReels
+            isPulseMobile || isReels || isChat
               ? "min-h-[100dvh] p-0 md:min-h-[calc(100dvh-3.5rem)]"
               : isBare
                 ? "min-h-[100dvh]"

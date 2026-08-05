@@ -16,33 +16,44 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useDemo } from "@/lib/demo-store";
+import { useI18n } from "@/lib/i18n";
 import { Avatar } from "@/components/ui/card";
 import { QuickPublishSheet } from "@/components/publish/quick-publish-sheet";
 
 const tabs = [
-  { href: "/feed", label: "Pulse", icon: Compass },
-  { href: "/opportunities", label: "Ops", icon: Briefcase },
-  { href: "__publish__", label: "Publish", icon: Plus },
-  { href: "/reels", label: "Reels", icon: Clapperboard },
-  { href: "/profile", label: "You", icon: User },
+  { href: "/feed", labelKey: "nav.home", fallback: "Pulse", icon: Compass },
+  { href: "/opportunities", labelKey: "nav.opportunities", fallback: "Ops", icon: Briefcase },
+  { href: "__publish__", labelKey: "nav.publish", fallback: "Publish", icon: Plus },
+  { href: "/messages", labelKey: "nav.messages", fallback: "Msgs", icon: MessageCircle },
+  { href: "/profile", labelKey: "nav.profile", fallback: "You", icon: User },
 ];
 
 export function BottomNav() {
   const pathname = usePathname();
+  const { t } = useI18n();
+  const { auth, notifications, conversations } = useDemo();
   const [publishOpen, setPublishOpen] = useState(false);
   const hide =
     pathname.startsWith("/auth") ||
     pathname.startsWith("/onboarding") ||
     pathname === "/" ||
-    pathname.startsWith("/p/");
+    pathname.startsWith("/p/") ||
+    /^\/messages\/[^/]+$/.test(pathname);
 
   if (hide) return null;
+
+  const unreadMsgs = auth.user
+    ? conversations
+        .filter((c) => c.participant_ids.includes(auth.user!.id))
+        .reduce((sum, c) => sum + (c.unread_count ?? 0), 0)
+    : 0;
 
   return (
     <>
       <nav className="safe-bottom fixed inset-x-0 bottom-3 z-50 flex justify-center px-4 md:hidden">
         <ul className="nav-capsule flex w-full max-w-md items-center justify-between rounded-[28px] bg-playce-dark/90 px-2 py-2 backdrop-blur-2xl">
-          {tabs.map(({ href, label, icon: Icon }) => {
+          {tabs.map(({ href, labelKey, fallback, icon: Icon }) => {
+            const label = t(labelKey) !== labelKey ? t(labelKey) : fallback;
             if (href === "__publish__") {
               return (
                 <li key="publish" className="-mt-8">
@@ -59,17 +70,23 @@ export function BottomNav() {
             const active =
               pathname === href ||
               (href !== "/feed" && pathname.startsWith(href));
+            const badge = href === "/messages" ? unreadMsgs : 0;
             return (
               <li key={href}>
                 <Link
                   href={href}
                   className={cn(
-                    "flex min-w-[56px] flex-col items-center gap-0.5 px-2 py-1.5 text-[10px] transition",
+                    "relative flex min-w-[56px] flex-col items-center gap-0.5 px-2 py-1.5 text-[10px] transition",
                     active ? "text-playce-teal" : "text-slate-muted"
                   )}
                 >
                   <Icon className="h-5 w-5" strokeWidth={active ? 2.5 : 2} />
-                  <span>{label}</span>
+                  <span className="max-w-[56px] truncate">{label}</span>
+                  {badge > 0 && (
+                    <span className="absolute right-2 top-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-playce-teal px-1 text-[9px] font-bold text-playce-black">
+                      {badge}
+                    </span>
+                  )}
                 </Link>
               </li>
             );
@@ -89,7 +106,8 @@ export function TopBar() {
     pathname.startsWith("/onboarding") ||
     pathname === "/" ||
     pathname.startsWith("/reels") ||
-    pathname === "/feed";
+    pathname === "/feed" ||
+    /^\/messages\/[^/]+$/.test(pathname);
 
   if (hide || !auth.user) return null;
 
@@ -157,6 +175,7 @@ export function TopBar() {
 export function SideNav() {
   const pathname = usePathname();
   const { auth } = useDemo();
+  const { t } = useI18n();
   const hide =
     pathname.startsWith("/auth") ||
     pathname.startsWith("/onboarding") ||
@@ -165,14 +184,14 @@ export function SideNav() {
   if (hide || !auth.user) return null;
 
   const items = [
-    { href: "/feed", label: "Pulse", icon: Compass },
-    { href: "/opportunities", label: "Opportunities", icon: Briefcase },
-    { href: "/publish", label: "Publish", icon: Plus },
+    { href: "/feed", label: t("nav.home"), icon: Compass },
+    { href: "/opportunities", label: t("nav.opportunities"), icon: Briefcase },
+    { href: "/messages", label: t("messages.title"), icon: MessageCircle },
+    { href: "/publish", label: t("nav.publish"), icon: Plus },
     { href: "/reels", label: "Reels", icon: Clapperboard },
-    { href: "/profile", label: "Profile", icon: User },
-    { href: "/search", label: "Search", icon: Search },
-    { href: "/messages", label: "Messages", icon: MessageCircle },
-    { href: "/notifications", label: "Notifications", icon: Bell },
+    { href: "/search", label: t("nav.search"), icon: Search },
+    { href: "/notifications", label: t("nav.notifications"), icon: Bell },
+    { href: "/profile", label: t("nav.profile"), icon: User },
     ...(auth.user.role === "admin"
       ? [{ href: "/admin", label: "Admin", icon: Shield }]
       : []),

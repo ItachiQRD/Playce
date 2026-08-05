@@ -62,7 +62,10 @@
     "opportunities": "Opportunités",
     "publish": "Publier",
     "reels": "Reels",
-    "profile": "Profil"
+    "profile": "Profil",
+    "search": "Recherche",
+    "notifications": "Notifications",
+    "messages": "Messages"
   },
   "feed": {
     "title": "Fil d'actualité",

@@ -117,9 +117,22 @@ export function QuickPublishSheet({
         />
 
         {auth.user && auth.user.completeness < 40 ? (
-          <p className="mb-3 text-center text-xs text-warning">
-            {t("publish.needProfile")}
-          </p>
+          <div className="space-y-3">
+            <p className="text-center text-xs text-warning">
+              {t("publish.needProfile")} ({auth.user.completeness}%)
+            </p>
+            <Button
+              className="w-full"
+              size="lg"
+              variant="outline"
+              onClick={() => {
+                onClose();
+                router.push("/profile/edit");
+              }}
+            >
+              {t("feed.completeProfile")}
+            </Button>
+          </div>
         ) : (
           <Button className="w-full" size="lg" onClick={publish}>
             {locale === "fr" ? "Publier & gagner du Signal" : "Publish & earn Signal"}

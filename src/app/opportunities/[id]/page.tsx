@@ -55,7 +55,7 @@ export default function OpportunityDetailPage() {
   const lvl = footballLevels.find((l) => l.slug === opp.level);
 
   return (
-    <div className="mx-auto max-w-4xl space-y-6 px-4 py-6">
+    <div className="mx-auto max-w-4xl space-y-6 px-4 py-6 pb-28 md:pb-8">
       <div className="space-y-3">
         <div className="flex flex-wrap gap-2">
           <Badge variant={opp.type === "offer" ? "teal" : "blue"}>
@@ -63,7 +63,9 @@ export default function OpportunityDetailPage() {
               ? t("opportunities.offers")
               : t("opportunities.demands")}
           </Badge>
-          <Badge variant="success">{opp.status}</Badge>
+          <Badge variant="success">
+            {opp.status === "open" ? "Open" : "Closed"}
+          </Badge>
         </div>
         <h1 className="font-display text-2xl font-bold">{opp.title}</h1>
         <div className="flex items-center gap-3">
@@ -121,22 +123,23 @@ export default function OpportunityDetailPage() {
       </div>
 
       {!isOwner && auth.user && (
-        <Card className="space-y-3">
+        <Card id="apply-block" className="hidden space-y-3 md:block">
           {myApp || applied ? (
             <div className="space-y-2">
               <p className="font-medium text-playce-teal">
                 {t("opportunities.applySuccess")}
               </p>
               <Badge>
-                {t(
-                  `opportunities.statusLabels.${myApp?.status ?? "sent"}`
-                )}
+                {t(`opportunities.statusLabels.${myApp?.status ?? "sent"}`)}
               </Badge>
               <Button
                 variant="secondary"
                 className="w-full"
                 onClick={() => {
-                  if (isMinor(auth.user?.birth_date) && !opp.author?.identity_verified) {
+                  if (
+                    isMinor(auth.user?.birth_date) &&
+                    !opp.author?.identity_verified
+                  ) {
                     alert(t("messages.minorBlocked"));
                     return;
                   }
@@ -147,29 +150,32 @@ export default function OpportunityDetailPage() {
                 {t("opportunities.contact")}
               </Button>
             </div>
+          ) : auth.user.completeness < 60 ? (
+            <div className="space-y-3">
+              <p className="text-sm text-warning">{t("opportunities.needProfile")}</p>
+              <Link href="/profile/edit">
+                <Button variant="outline" className="w-full">
+                  {t("feed.completeProfile")}
+                </Button>
+              </Link>
+            </div>
           ) : (
             <>
-              {auth.user.completeness < 60 ? (
-                <p className="text-sm text-warning">{t("opportunities.needProfile")}</p>
-              ) : (
-                <>
-                  <Textarea
-                    label={t("opportunities.applyMessage")}
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder={t("opportunities.applyPlaceholder")}
-                  />
-                  <Button
-                    className="w-full"
-                    onClick={() => {
-                      const app = applyToOpportunity(opp.id, message);
-                      if (app) setApplied(true);
-                    }}
-                  >
-                    {t("common.apply")} — Sports ID
-                  </Button>
-                </>
-              )}
+              <Textarea
+                label={t("opportunities.applyMessage")}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder={t("opportunities.applyPlaceholder")}
+              />
+              <Button
+                className="w-full"
+                onClick={() => {
+                  const app = applyToOpportunity(opp.id, message);
+                  if (app) setApplied(true);
+                }}
+              >
+                {t("common.apply")} — Sports ID
+              </Button>
             </>
           )}
         </Card>
@@ -186,6 +192,43 @@ export default function OpportunityDetailPage() {
             }}
           />
         </Card>
+      )}
+
+      {/* Sticky mobile CTA */}
+      {!isOwner && auth.user && (
+        <div className="safe-bottom fixed inset-x-0 bottom-[4.75rem] z-40 border-t border-white/10 bg-playce-dark/95 px-4 py-3 backdrop-blur md:hidden">
+          {myApp || applied ? (
+            <Button
+              className="w-full"
+              variant="secondary"
+              onClick={() => {
+                const id = startConversation(opp.author_id);
+                router.push(`/messages/${id}`);
+              }}
+            >
+              {t("opportunities.contact")}
+            </Button>
+          ) : auth.user.completeness < 60 ? (
+            <Link href="/profile/edit" className="block">
+              <Button className="w-full" variant="outline">
+                {t("feed.completeProfile")}
+              </Button>
+            </Link>
+          ) : (
+            <Button
+              className="w-full"
+              onClick={() => {
+                const app = applyToOpportunity(
+                  opp.id,
+                  message || (locale === "fr" ? "Candidature via PLAYCE" : "Application via PLAYCE")
+                );
+                if (app) setApplied(true);
+              }}
+            >
+              {t("common.apply")} · Match {match.score}
+            </Button>
+          )}
+        </div>
       )}
     </div>
   );
