@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import {
   Briefcase,
-  Home,
-  PlusSquare,
+  Compass,
+  Plus,
   Clapperboard,
   User,
   Search,
@@ -16,17 +17,19 @@ import {
 import { cn } from "@/lib/utils";
 import { useDemo } from "@/lib/demo-store";
 import { Avatar } from "@/components/ui/card";
+import { QuickPublishSheet } from "@/components/publish/quick-publish-sheet";
 
 const tabs = [
-  { href: "/feed", label: "Home", icon: Home },
-  { href: "/opportunities", label: "Opportunities", icon: Briefcase },
-  { href: "/publish", label: "Publish", icon: PlusSquare },
+  { href: "/feed", label: "Pulse", icon: Compass },
+  { href: "/opportunities", label: "Ops", icon: Briefcase },
+  { href: "__publish__", label: "Publish", icon: Plus },
   { href: "/reels", label: "Reels", icon: Clapperboard },
-  { href: "/profile", label: "Profile", icon: User },
+  { href: "/profile", label: "You", icon: User },
 ];
 
 export function BottomNav() {
   const pathname = usePathname();
+  const [publishOpen, setPublishOpen] = useState(false);
   const hide =
     pathname.startsWith("/auth") ||
     pathname.startsWith("/onboarding") ||
@@ -36,32 +39,45 @@ export function BottomNav() {
   if (hide) return null;
 
   return (
-    <nav className="safe-bottom fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-playce-black/95 backdrop-blur-xl md:hidden">
-      <ul className="mx-auto flex max-w-lg items-stretch justify-around px-2 py-1">
-        {tabs.map(({ href, label, icon: Icon }) => {
-          const active =
-            pathname === href ||
-            (href !== "/feed" && pathname.startsWith(href));
-          return (
-            <li key={href}>
-              <Link
-                href={href}
-                className={cn(
-                  "flex min-w-[64px] flex-col items-center gap-0.5 px-2 py-2 text-[10px] transition",
-                  active ? "text-playce-teal" : "text-slate-muted hover:text-white"
-                )}
-              >
-                <Icon
-                  className={cn("h-5 w-5", active && "drop-shadow-[0_0_8px_rgba(0,184,148,0.6)]")}
-                  strokeWidth={active ? 2.5 : 2}
-                />
-                <span>{label}</span>
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-    </nav>
+    <>
+      <nav className="safe-bottom fixed inset-x-0 bottom-3 z-50 flex justify-center px-4 md:hidden">
+        <ul className="nav-capsule flex w-full max-w-md items-center justify-between rounded-[28px] bg-playce-black/80 px-2 py-2 backdrop-blur-2xl">
+          {tabs.map(({ href, label, icon: Icon }) => {
+            if (href === "__publish__") {
+              return (
+                <li key="publish" className="-mt-8">
+                  <button
+                    onClick={() => setPublishOpen(true)}
+                    className="publish-orb flex h-14 w-14 items-center justify-center rounded-full bg-playce-teal text-playce-black"
+                    aria-label={label}
+                  >
+                    <Plus className="h-7 w-7" strokeWidth={2.5} />
+                  </button>
+                </li>
+              );
+            }
+            const active =
+              pathname === href ||
+              (href !== "/feed" && pathname.startsWith(href));
+            return (
+              <li key={href}>
+                <Link
+                  href={href}
+                  className={cn(
+                    "flex min-w-[56px] flex-col items-center gap-0.5 px-2 py-1.5 text-[10px] transition",
+                    active ? "text-playce-teal" : "text-slate-muted"
+                  )}
+                >
+                  <Icon className="h-5 w-5" strokeWidth={active ? 2.5 : 2} />
+                  <span>{label}</span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+      <QuickPublishSheet open={publishOpen} onClose={() => setPublishOpen(false)} />
+    </>
   );
 }
 
@@ -72,7 +88,8 @@ export function TopBar() {
     pathname.startsWith("/auth") ||
     pathname.startsWith("/onboarding") ||
     pathname === "/" ||
-    pathname.startsWith("/reels");
+    pathname.startsWith("/reels") ||
+    pathname === "/feed";
 
   if (hide || !auth.user) return null;
 
@@ -148,7 +165,11 @@ export function SideNav() {
   if (hide || !auth.user) return null;
 
   const items = [
-    ...tabs,
+    { href: "/feed", label: "Pulse", icon: Compass },
+    { href: "/opportunities", label: "Opportunities", icon: Briefcase },
+    { href: "/publish", label: "Publish", icon: Plus },
+    { href: "/reels", label: "Reels", icon: Clapperboard },
+    { href: "/profile", label: "Profile", icon: User },
     { href: "/search", label: "Search", icon: Search },
     { href: "/messages", label: "Messages", icon: MessageCircle },
     { href: "/notifications", label: "Notifications", icon: Bell },
@@ -183,7 +204,7 @@ export function SideNav() {
       </nav>
       <div className="mt-8 rounded-2xl border border-white/10 bg-surface p-4">
         <p className="font-display text-sm font-semibold">Where Sport Meets Opportunity</p>
-        <p className="mt-1 text-xs text-slate-muted">Talent is everywhere. Opportunity isn&apos;t.</p>
+        <p className="mt-1 text-xs text-slate-muted">Be seen. Be found. Raise your Signal.</p>
       </div>
     </aside>
   );

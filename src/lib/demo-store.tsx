@@ -44,6 +44,13 @@ import {
   type MatchResult,
 } from "@/lib/utils";
 import { track } from "@/lib/analytics";
+import {
+  applySignalReward,
+  createInitialSignal,
+  rollDailySignal,
+  type SignalAction,
+  type SignalState,
+} from "@/lib/signal";
 
 interface AuthState {
   user: Profile | null;
@@ -64,6 +71,8 @@ interface DemoStore {
   reports: Report[];
   experiences: typeof demoExperiences;
   sports: typeof sports;
+  signal: SignalState;
+  lastSignalGain: number;
   loginAs: (profileId: string) => void;
   logout: () => void;
   register: (data: {
@@ -92,6 +101,8 @@ interface DemoStore {
   resolveReport: (reportId: string, status: "resolved" | "dismissed") => void;
   getMatchScore: (opportunity: Opportunity, profile?: Profile | null) => MatchResult;
   requestVerification: () => void;
+  awardSignal: (action: SignalAction, questHint?: "discover" | "engage" | "publish") => number;
+  clearSignalGain: () => void;
 }
 
 const DemoContext = createContext<DemoStore | null>(null);
@@ -114,6 +125,8 @@ export function DemoProvider({ children }: { children: ReactNode }) {
   const [notifications, setNotifications] = useState<Notification[]>(demoNotifications);
   const [reports, setReports] = useState<Report[]>(demoReports);
   const [experiences] = useState(demoExperiences);
+  const [signal, setSignal] = useState<SignalState>(createInitialSignal);
+  const [lastSignalGain, setLastSignalGain] = useState(0);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
@@ -131,14 +144,17 @@ export function DemoProvider({ children }: { children: ReactNode }) {
         if (data.messages) setMessages(data.messages);
         if (data.reports) setReports(data.reports);
         if (data.comments) setComments(data.comments);
+        if (data.signal) setSignal(rollDailySignal(data.signal));
+        else setSignal(rollDailySignal(createInitialSignal()));
       } else {
-        // Auto-login as demo athlete for seamless first experience
         const user = getDemoUser(CURRENT_DEMO_USER_ID);
         setAuth({ user, isAuthenticated: true, onboardingComplete: true });
+        setSignal(rollDailySignal(createInitialSignal()));
       }
     } catch {
       const user = getDemoUser(CURRENT_DEMO_USER_ID);
       setAuth({ user, isAuthenticated: true, onboardingComplete: true });
+      setSignal(rollDailySignal(createInitialSignal()));
     }
     setHydrated(true);
   }, []);
@@ -158,6 +174,7 @@ export function DemoProvider({ children }: { children: ReactNode }) {
         messages,
         reports,
         comments,
+        signal,
       })
     );
   }, [
@@ -172,7 +189,24 @@ export function DemoProvider({ children }: { children: ReactNode }) {
     messages,
     reports,
     comments,
+    signal,
   ]);
+
+  const awardSignal = useCallback(
+    (action: SignalAction, questHint?: "discover" | "engage" | "publish") => {
+      let gained = 0;
+      setSignal((prev) => {
+        const result = applySignalReward(prev, action, questHint);
+        gained = result.gained;
+        return result.state;
+      });
+      setLastSignalGain(gained);
+      return gained;
+    },
+    []
+  );
+
+  const clearSignalGain = useCallback(() => setLastSignalGain(0), []);
 
   const loginAs = useCallback(
     (profileId: string) => {
@@ -278,9 +312,13 @@ export function DemoProvider({ children }: { children: ReactNode }) {
       };
       setPosts((prev) => [post, ...prev]);
       track("first_post", { type: post.type });
+      awardSignal(
+        post.type === "reel" ? "publish_reel" : "publish",
+        "publish"
+      );
       return post;
     },
-    [auth.user]
+    [auth.user, awardSignal]
   );
 
   const toggleLike = useCallback(
@@ -289,6 +327,7 @@ export function DemoProvider({ children }: { children: ReactNode }) {
         prev.map((p) => {
           if (p.id !== postId) return p;
           const liked = !p.liked_by_me;
+          if (liked) awardSignal("like", "engage");
           return {
             ...p,
             liked_by_me: liked,
@@ -297,7 +336,7 @@ export function DemoProvider({ children }: { children: ReactNode }) {
         })
       );
     },
-    []
+    [awardSignal]
   );
 
   const addComment = useCallback(
@@ -317,8 +356,9 @@ export function DemoProvider({ children }: { children: ReactNode }) {
           p.id === postId ? { ...p, comments_count: p.comments_count + 1 } : p
         )
       );
+      awardSignal("comment", "engage");
     },
-    [auth.user]
+    [auth.user, awardSignal]
   );
 
   const getMatchScore = useCallback(
@@ -404,6 +444,7 @@ export function DemoProvider({ children }: { children: ReactNode }) {
         )
       );
       track("first_application", { opportunityId });
+      awardSignal("apply");
       if (opportunity?.author_id) {
         setNotifications((prev) => [
           {
@@ -431,7 +472,7 @@ export function DemoProvider({ children }: { children: ReactNode }) {
       }
       return app;
     },
-    [auth.user, applications, opportunities]
+    [auth.user, applications, opportunities, awardSignal]
   );
 
   const updateApplicationStatus = useCallback(
@@ -633,6 +674,8 @@ export function DemoProvider({ children }: { children: ReactNode }) {
       reports,
       experiences,
       sports,
+      signal,
+      lastSignalGain,
       loginAs,
       logout,
       register,
@@ -655,6 +698,8 @@ export function DemoProvider({ children }: { children: ReactNode }) {
       resolveReport,
       getMatchScore,
       requestVerification,
+      awardSignal,
+      clearSignalGain,
     }),
     [
       auth,
@@ -668,6 +713,8 @@ export function DemoProvider({ children }: { children: ReactNode }) {
       notifications,
       reports,
       experiences,
+      signal,
+      lastSignalGain,
       loginAs,
       logout,
       register,
@@ -690,6 +737,8 @@ export function DemoProvider({ children }: { children: ReactNode }) {
       resolveReport,
       getMatchScore,
       requestVerification,
+      awardSignal,
+      clearSignalGain,
     ]
   );
 

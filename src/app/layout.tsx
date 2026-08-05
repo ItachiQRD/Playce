@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Sora } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
-import { BottomNav, SideNav, TopBar } from "@/components/layout/navigation";
+import { AppShell } from "@/components/layout/app-shell";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0F172A",
+  themeColor: "#05070D",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -46,16 +46,9 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" className={`${inter.variable} ${sora.variable} h-full`}>
-      <body className="min-h-full bg-playce-dark font-sans text-white antialiased">
+      <body className="min-h-full bg-playce-black font-sans text-white antialiased">
         <Providers>
-          <TopBar />
-          <div className="mx-auto flex max-w-6xl">
-            <SideNav />
-            <main className="min-h-[calc(100dvh-3.5rem)] flex-1 pb-24 md:pb-8">
-              {children}
-            </main>
-          </div>
-          <BottomNav />
+          <AppShell>{children}</AppShell>
         </Providers>
       </body>
     </html>
