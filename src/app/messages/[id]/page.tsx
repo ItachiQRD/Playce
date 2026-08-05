@@ -16,6 +16,7 @@ export default function ConversationPage() {
   const router = useRouter();
   const [text, setText] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
 
   const conv = conversations.find((c) => c.id === params.id);
   const thread = messages
@@ -26,7 +27,7 @@ export default function ConversationPage() {
     );
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [thread.length]);
 
   if (!auth.user) {
@@ -37,7 +38,7 @@ export default function ConversationPage() {
   if (!conv) {
     return (
       <div className="px-4 py-12 text-center text-slate-muted">
-        Conversation introuvable
+        {t("messages.notFound")}
       </div>
     );
   }
@@ -45,24 +46,21 @@ export default function ConversationPage() {
   const other = conv.participants?.find((p) => p.id !== auth.user!.id);
 
   return (
-    <div className="mx-auto flex h-[calc(100dvh-3.5rem)] max-w-xl flex-col md:h-[calc(100dvh-3.5rem)]">
-      <div className="flex items-center gap-3 border-b border-white/10 px-4 py-3">
-        <Link href="/messages" className="rounded-lg p-1 hover:bg-white/5">
+    <div className="chat-shell mx-auto flex w-full max-w-xl flex-col overflow-hidden bg-playce-dark">
+      <div className="flex shrink-0 items-center gap-3 border-b border-white/10 px-4 py-3">
+        <Link href="/messages" className="rounded-lg p-1.5 hover:bg-white/5">
           <ArrowLeft className="h-5 w-5" />
         </Link>
-        <Link
-          href={`/p/${other?.handle}`}
-          className="flex items-center gap-3"
-        >
+        <Link href={`/p/${other?.handle}`} className="flex min-w-0 items-center gap-3">
           <Avatar src={other?.avatar_url} name={other?.full_name ?? "?"} size="sm" />
-          <div>
-            <p className="font-medium">{other?.full_name}</p>
-            <p className="text-xs text-slate-muted">@{other?.handle}</p>
+          <div className="min-w-0">
+            <p className="truncate font-medium">{other?.full_name}</p>
+            <p className="truncate text-xs text-slate-muted">@{other?.handle}</p>
           </div>
         </Link>
       </div>
 
-      <div className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
+      <div ref={listRef} className="min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain px-4 py-5">
         {thread.map((m) => {
           const mine = m.sender_id === auth.user!.id;
           return (
@@ -71,15 +69,15 @@ export default function ConversationPage() {
               className={`flex ${mine ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm ${
+                className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
                   mine
                     ? "bg-playce-teal text-playce-black"
-                    : "bg-surface border border-white/10"
+                    : "border border-white/10 bg-surface"
                 }`}
               >
-                <p>{m.content}</p>
+                <p className="break-words whitespace-pre-wrap">{m.content}</p>
                 <p
-                  className={`mt-1 text-[10px] ${
+                  className={`mt-1.5 text-[10px] ${
                     mine ? "text-playce-black/60" : "text-slate-muted"
                   }`}
                 >
@@ -99,17 +97,17 @@ export default function ConversationPage() {
           sendMessage(params.id, text.trim());
           setText("");
         }}
-        className="safe-bottom flex gap-2 border-t border-white/10 p-3"
+        className="flex shrink-0 gap-2 border-t border-white/10 bg-playce-dark px-3 py-3"
       >
         <input
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder={t("messages.placeholder")}
-          className="flex-1 rounded-2xl border border-white/10 bg-playce-black/60 px-4 py-3 text-sm outline-none focus:border-playce-teal/50"
+          className="min-w-0 flex-1 rounded-2xl border border-white/10 bg-surface px-4 py-3 text-sm outline-none focus:border-playce-teal/50"
         />
         <button
           type="submit"
-          className="flex h-12 w-12 items-center justify-center rounded-2xl bg-playce-teal text-playce-black"
+          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-playce-teal text-playce-black"
           aria-label="Send"
         >
           <Send className="h-5 w-5" />

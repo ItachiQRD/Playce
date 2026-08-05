@@ -2,7 +2,7 @@
 
 :root {
   --playce-dark: #0f172a;
-  --playce-black: #05070d;
+  --playce-black: #0f172a;
   --playce-teal: #00b894;
   --electric-blue: #2563eb;
   --white: #ffffff;
@@ -13,6 +13,7 @@
   --surface: #1a2332;
   --surface-2: #243044;
   --border: rgba(255, 255, 255, 0.08);
+  --nav-offset: calc(5.75rem + env(safe-area-inset-bottom, 0px));
 }
 
 @theme inline {
@@ -35,16 +36,24 @@
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: only dark;
+  background: #0f172a;
 }
 
 body {
-  background: var(--playce-black);
+  background: #0f172a !important;
   color: var(--white);
   font-family: var(--font-inter), Arial, Helvetica, sans-serif;
   line-height: 1.5;
   min-height: 100dvh;
   overscroll-behavior-y: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  html,
+  body {
+    background: #0f172a !important;
+  }
 }
 
 h1,
@@ -60,8 +69,13 @@ h4,
 }
 
 ::-webkit-scrollbar {
-  width: 0;
-  height: 0;
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
 }
 
 .safe-bottom {
@@ -98,12 +112,6 @@ h4,
   }
 }
 
-@keyframes orbitSpin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 @keyframes breathe {
   0%,
   100% {
@@ -127,15 +135,6 @@ h4,
   }
 }
 
-@keyframes shimmer {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-}
-
 .animate-fade-up {
   animation: fadeUp 0.8s ease forwards;
   opacity: 0;
@@ -152,7 +151,7 @@ h4,
 .nav-capsule {
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.08),
-    0 20px 50px rgba(0, 0, 0, 0.55);
+    0 20px 50px rgba(0, 0, 0, 0.35);
 }
 
 .publish-orb {
@@ -169,13 +168,15 @@ h4,
   );
 }
 
-.immersive-page {
-  min-height: 100dvh;
-  background: var(--playce-black);
+/* Mobile chat: fits screen above floating nav */
+.chat-shell {
+  height: calc(100dvh - 3.5rem);
+  max-height: calc(100dvh - 3.5rem);
 }
 
-@media (min-width: 768px) {
-  body {
-    background: var(--playce-dark);
+@media (max-width: 767px) {
+  .chat-shell {
+    height: calc(100dvh - 3.5rem - var(--nav-offset));
+    max-height: calc(100dvh - 3.5rem - var(--nav-offset));
   }
 }

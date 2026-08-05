@@ -25,27 +25,27 @@ export default function MessagesPage() {
     );
 
   return (
-    <div className="mx-auto max-w-xl px-4 py-6">
-      <h1 className="mb-6 font-display text-2xl font-bold">{t("messages.title")}</h1>
+    <div className="mx-auto max-w-xl px-4 py-6 md:py-8">
+      <h1 className="mb-8 font-display text-2xl font-bold">{t("messages.title")}</h1>
 
       {mine.length === 0 ? (
         <EmptyState
           title={t("messages.empty")}
-          description="Candidez à une opportunité ou contactez un profil pour démarrer."
+          description={t("messages.emptyHint")}
         />
       ) : (
-        <div className="space-y-2">
+        <div className="space-y-4">
           {mine.map((c) => {
             const other = c.participants?.find((p) => p.id !== auth.user!.id);
             return (
-              <Link key={c.id} href={`/messages/${c.id}`}>
-                <Card className="flex items-center gap-3 transition hover:border-playce-teal/30">
+              <Link key={c.id} href={`/messages/${c.id}`} className="block">
+                <Card className="flex items-center gap-4 p-4 transition hover:border-playce-teal/30">
                   <Avatar
                     src={other?.avatar_url}
                     name={other?.full_name ?? "?"}
                   />
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center justify-between gap-2">
+                  <div className="min-w-0 flex-1 space-y-1">
+                    <div className="flex items-center justify-between gap-3">
                       <p className="truncate font-medium">{other?.full_name}</p>
                       <span className="shrink-0 text-[10px] text-slate-muted">
                         {formatRelativeDate(c.updated_at, locale)}

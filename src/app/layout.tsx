@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#05070D",
+  themeColor: "#0F172A",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -45,8 +45,8 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className={`${inter.variable} ${sora.variable} h-full`}>
-      <body className="min-h-full bg-playce-black font-sans text-white antialiased">
+    <html lang="fr" className={`${inter.variable} ${sora.variable} h-full`} style={{ colorScheme: "dark" }}>
+      <body className="min-h-full bg-playce-dark font-sans text-white antialiased">
         <Providers>
           <AppShell>{children}</AppShell>
         </Providers>

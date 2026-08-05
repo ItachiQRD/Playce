@@ -41,7 +41,7 @@ export function BottomNav() {
   return (
     <>
       <nav className="safe-bottom fixed inset-x-0 bottom-3 z-50 flex justify-center px-4 md:hidden">
-        <ul className="nav-capsule flex w-full max-w-md items-center justify-between rounded-[28px] bg-playce-black/80 px-2 py-2 backdrop-blur-2xl">
+        <ul className="nav-capsule flex w-full max-w-md items-center justify-between rounded-[28px] bg-playce-dark/90 px-2 py-2 backdrop-blur-2xl">
           {tabs.map(({ href, label, icon: Icon }) => {
             if (href === "__publish__") {
               return (

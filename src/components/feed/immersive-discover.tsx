@@ -81,7 +81,7 @@ export function ImmersiveDiscover() {
 
   return (
     <div
-      className="relative h-[100dvh] overflow-hidden bg-playce-black md:h-[calc(100dvh-3.5rem)] md:rounded-none"
+      className="relative h-[100dvh] overflow-hidden bg-playce-dark md:h-[calc(100dvh-3.5rem)]"
       onTouchStart={(e) => {
         touchY.current = e.touches[0].clientY;
       }}
@@ -207,7 +207,7 @@ function DiscoverCard({
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/50" />
 
-        <div className="absolute inset-x-0 bottom-0 z-10 space-y-3 px-5 pb-36 pt-10 md:pb-16">
+        <div className="absolute inset-x-0 bottom-0 z-10 space-y-4 px-5 pb-40 pt-10 md:pb-16">
           <Badge variant="teal" className="backdrop-blur">
             {post.type}
           </Badge>
@@ -275,8 +275,8 @@ function DiscoverCard({
     return (
       <div className="relative h-full w-full bg-playce-black">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(37,99,235,0.35),transparent_55%),#05070D]" />
-        <div className="absolute inset-0 flex flex-col justify-end px-5 pb-36 md:pb-16">
-          <div className="mb-auto mt-28 space-y-4">
+        <div className="absolute inset-0 flex flex-col justify-end px-5 pb-40 md:pb-16">
+          <div className="mb-auto mt-28 space-y-5">
             <div className="inline-flex items-center gap-2 rounded-full border border-electric-blue/40 bg-electric-blue/15 px-3 py-1 text-xs text-electric-blue">
               <Briefcase className="h-3.5 w-3.5" />
               {opp.type === "offer" ? t("opportunities.offers") : t("opportunities.demands")}
@@ -329,7 +329,7 @@ function DiscoverCard({
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/30" />
       <div className="absolute inset-x-0 bottom-0 flex flex-col items-center px-6 pb-40 text-center md:pb-16">
         <Avatar src={profile.avatar_url} name={profile.full_name} size="xl" />
-        <div className="mt-4 flex items-center gap-1">
+        <div className="mt-5 flex items-center gap-1">
           <h2 className="font-display text-2xl font-bold">{profile.full_name}</h2>
           {profile.identity_verified && (
             <BadgeCheck className="h-5 w-5 text-playce-teal" />
@@ -339,10 +339,10 @@ function DiscoverCard({
           {t(`roles.${profile.role}`)}
           {profile.city ? ` · ${profile.city}` : ""}
         </p>
-        <p className="mt-3 line-clamp-2 max-w-sm text-sm text-white/70">
+        <p className="mt-4 line-clamp-2 max-w-sm text-sm text-white/70">
           {profile.bio || (locale === "fr" ? "Talent à découvrir" : "Talent to discover")}
         </p>
-        <div className="mt-5 flex gap-2">
+        <div className="mt-6 flex gap-2">
           <Button onClick={onOpen}>
             <Sparkles className="h-4 w-4" />
             Sports ID
