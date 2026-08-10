@@ -25,8 +25,8 @@ export default function MessagesPage() {
     );
 
   return (
-    <div className="mx-auto max-w-xl px-4 py-6 md:py-8">
-      <h1 className="mb-8 font-display text-2xl font-bold">{t("messages.title")}</h1>
+    <div className="mx-auto max-w-xl px-4 py-5 md:py-8">
+      <h1 className="mb-5 font-display text-2xl font-bold md:mb-8">{t("messages.title")}</h1>
 
       {mine.length === 0 ? (
         <EmptyState

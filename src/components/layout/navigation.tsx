@@ -21,17 +21,17 @@ import { Avatar } from "@/components/ui/card";
 import { QuickPublishSheet } from "@/components/publish/quick-publish-sheet";
 
 const tabs = [
-  { href: "/feed", labelKey: "nav.home", fallback: "Pulse", icon: Compass },
-  { href: "/opportunities", labelKey: "nav.opportunities", fallback: "Ops", icon: Briefcase },
+  { href: "/feed", labelKey: "nav.pulse", fallback: "Pulse", icon: Compass },
+  { href: "/opportunities", labelKey: "nav.ops", fallback: "Ops", icon: Briefcase },
   { href: "__publish__", labelKey: "nav.publish", fallback: "Publish", icon: Plus },
-  { href: "/messages", labelKey: "nav.messages", fallback: "Msgs", icon: MessageCircle },
-  { href: "/profile", labelKey: "nav.profile", fallback: "You", icon: User },
+  { href: "/messages", labelKey: "nav.msgs", fallback: "Msgs", icon: MessageCircle },
+  { href: "/profile", labelKey: "nav.you", fallback: "You", icon: User },
 ];
 
 export function BottomNav() {
   const pathname = usePathname();
   const { t } = useI18n();
-  const { auth, notifications, conversations } = useDemo();
+  const { auth, conversations } = useDemo();
   const [publishOpen, setPublishOpen] = useState(false);
   const hide =
     pathname.startsWith("/auth") ||
@@ -76,15 +76,15 @@ export function BottomNav() {
                 <Link
                   href={href}
                   className={cn(
-                    "relative flex min-w-[56px] flex-col items-center gap-0.5 px-2 py-1.5 text-[10px] transition",
+                    "relative flex min-w-[52px] flex-col items-center gap-0.5 px-1.5 py-1.5 text-[10px] transition",
                     active ? "text-playce-teal" : "text-slate-muted"
                   )}
                 >
                   <Icon className="h-5 w-5" strokeWidth={active ? 2.5 : 2} />
-                  <span className="max-w-[56px] truncate">{label}</span>
+                  <span>{label}</span>
                   {badge > 0 && (
-                    <span className="absolute right-2 top-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-playce-teal px-1 text-[9px] font-bold text-playce-black">
-                      {badge}
+                    <span className="absolute right-0.5 top-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-playce-teal px-1 text-[9px] font-bold text-playce-black">
+                      {badge > 9 ? "9+" : badge}
                     </span>
                   )}
                 </Link>
@@ -117,55 +117,57 @@ export function TopBar() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-white/10 bg-playce-dark/90 backdrop-blur-xl">
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 px-4">
-        <Link href="/feed" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-playce-teal font-display text-sm font-bold text-playce-black">
-            P
-          </div>
-          <span className="hidden font-display text-lg font-semibold tracking-wide sm:inline">
-            PLAYCE
-          </span>
-        </Link>
+      <div className="safe-top">
+        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 px-4">
+          <Link href="/feed" className="flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-playce-teal font-display text-sm font-bold text-playce-black">
+              P
+            </div>
+            <span className="hidden font-display text-lg font-semibold tracking-wide sm:inline">
+              PLAYCE
+            </span>
+          </Link>
 
-        <div className="flex items-center gap-1 sm:gap-2">
-          <Link
-            href="/search"
-            className="rounded-xl p-2 text-slate-muted transition hover:bg-white/5 hover:text-white"
-            aria-label="Search"
-          >
-            <Search className="h-5 w-5" />
-          </Link>
-          <Link
-            href="/messages"
-            className="rounded-xl p-2 text-slate-muted transition hover:bg-white/5 hover:text-white"
-            aria-label="Messages"
-          >
-            <MessageCircle className="h-5 w-5" />
-          </Link>
-          <Link
-            href="/notifications"
-            className="relative rounded-xl p-2 text-slate-muted transition hover:bg-white/5 hover:text-white"
-            aria-label="Notifications"
-          >
-            <Bell className="h-5 w-5" />
-            {unread > 0 && (
-              <span className="absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-playce-teal px-1 text-[10px] font-bold text-playce-black">
-                {unread}
-              </span>
-            )}
-          </Link>
-          {auth.user.role === "admin" && (
+          <div className="flex items-center gap-1 sm:gap-2">
             <Link
-              href="/admin"
+              href="/search"
               className="rounded-xl p-2 text-slate-muted transition hover:bg-white/5 hover:text-white"
-              aria-label="Admin"
+              aria-label="Search"
             >
-              <Shield className="h-5 w-5" />
+              <Search className="h-5 w-5" />
             </Link>
-          )}
-          <Link href="/profile" className="ml-1">
-            <Avatar src={auth.user.avatar_url} name={auth.user.full_name} size="sm" />
-          </Link>
+            <Link
+              href="/messages"
+              className="hidden rounded-xl p-2 text-slate-muted transition hover:bg-white/5 hover:text-white md:inline-flex"
+              aria-label="Messages"
+            >
+              <MessageCircle className="h-5 w-5" />
+            </Link>
+            <Link
+              href="/notifications"
+              className="relative rounded-xl p-2 text-slate-muted transition hover:bg-white/5 hover:text-white"
+              aria-label="Notifications"
+            >
+              <Bell className="h-5 w-5" />
+              {unread > 0 && (
+                <span className="absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-playce-teal px-1 text-[10px] font-bold text-playce-black">
+                  {unread}
+                </span>
+              )}
+            </Link>
+            {auth.user.role === "admin" && (
+              <Link
+                href="/admin"
+                className="rounded-xl p-2 text-slate-muted transition hover:bg-white/5 hover:text-white"
+                aria-label="Admin"
+              >
+                <Shield className="h-5 w-5" />
+              </Link>
+            )}
+            <Link href="/profile" className="ml-1 hidden md:block">
+              <Avatar src={auth.user.avatar_url} name={auth.user.full_name} size="sm" />
+            </Link>
+          </div>
         </div>
       </div>
     </header>
@@ -188,7 +190,7 @@ export function SideNav() {
     { href: "/opportunities", label: t("nav.opportunities"), icon: Briefcase },
     { href: "/messages", label: t("messages.title"), icon: MessageCircle },
     { href: "/publish", label: t("nav.publish"), icon: Plus },
-    { href: "/reels", label: "Reels", icon: Clapperboard },
+    { href: "/reels", label: t("nav.reels"), icon: Clapperboard },
     { href: "/search", label: t("nav.search"), icon: Search },
     { href: "/notifications", label: t("nav.notifications"), icon: Bell },
     { href: "/profile", label: t("nav.profile"), icon: User },

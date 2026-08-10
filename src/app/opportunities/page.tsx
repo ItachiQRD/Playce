@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { SlidersHorizontal, X } from "lucide-react";
+import { Plus, SlidersHorizontal, X } from "lucide-react";
 import { useDemo } from "@/lib/demo-store";
 import { useI18n } from "@/lib/i18n";
 import { OpportunityCard } from "@/components/cards/entity-cards";
@@ -109,30 +109,35 @@ export default function OpportunitiesPage() {
   );
 
   return (
-    <div className="mx-auto max-w-3xl space-y-6 px-4 py-6 md:py-8">
-      <div className="flex items-center justify-between gap-3">
-        <h1 className="font-display text-2xl font-bold">
-          {t("opportunities.title")}
-        </h1>
-        <div className="flex items-center gap-2">
-          <Button
-            size="sm"
-            variant="secondary"
-            className="md:hidden"
-            onClick={() => setFiltersOpen(true)}
-          >
-            <SlidersHorizontal className="h-4 w-4" />
-            {t("opportunities.filters")}
-            {activeFilters > 0 && (
-              <Badge variant="teal" className="ml-1">
-                {activeFilters}
-              </Badge>
-            )}
-          </Button>
-          <Link href="/opportunities/new">
-            <Button size="sm">{t("opportunities.create")}</Button>
+    <div className="mx-auto max-w-3xl space-y-5 px-4 py-5 md:space-y-6 md:py-8">
+      <div className="space-y-3">
+        <div className="flex items-start justify-between gap-3">
+          <h1 className="font-display text-2xl font-bold leading-tight">
+            {t("opportunities.title")}
+          </h1>
+          <Link href="/opportunities/new" className="shrink-0">
+            <Button size="sm" className="hidden sm:inline-flex">
+              {t("opportunities.create")}
+            </Button>
+            <Button size="sm" className="sm:hidden" aria-label={t("opportunities.create")}>
+              <Plus className="h-4 w-4" />
+            </Button>
           </Link>
         </div>
+        <Button
+          size="sm"
+          variant="secondary"
+          className="w-full md:hidden"
+          onClick={() => setFiltersOpen(true)}
+        >
+          <SlidersHorizontal className="h-4 w-4" />
+          {t("opportunities.filters")}
+          {activeFilters > 0 && (
+            <Badge variant="teal" className="ml-1">
+              {activeFilters}
+            </Badge>
+          )}
+        </Button>
       </div>
 
       <div className="flex flex-wrap gap-2">

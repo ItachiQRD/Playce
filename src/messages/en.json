@@ -65,7 +65,11 @@
     "profile": "Profile",
     "search": "Search",
     "notifications": "Notifications",
-    "messages": "Messages"
+    "messages": "Messages",
+    "pulse": "Pulse",
+    "ops": "Ops",
+    "msgs": "Msgs",
+    "you": "You"
   },
   "feed": {
     "title": "Feed",

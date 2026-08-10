@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { ArrowLeft, X } from "lucide-react";
 import { useDemo } from "@/lib/demo-store";
 import { useI18n } from "@/lib/i18n";
 import { Avatar, Badge, Card, EmptyState } from "@/components/ui/card";
@@ -29,6 +30,7 @@ export default function OpportunityDetailPage() {
   const router = useRouter();
   const [message, setMessage] = useState("");
   const [applied, setApplied] = useState(false);
+  const [applyOpen, setApplyOpen] = useState(false);
 
   const opp = opportunities.find((o) => o.id === params.id);
 
@@ -50,13 +52,42 @@ export default function OpportunityDetailPage() {
   );
   const isOwner = auth.user?.id === opp.author_id;
   const apps = applications.filter((a) => a.opportunity_id === opp.id);
+  const hasApplied = Boolean(myApp || applied);
 
   const pos = footballPositions.find((p) => p.slug === opp.position);
   const lvl = footballLevels.find((l) => l.slug === opp.level);
 
+  const contactAuthor = () => {
+    if (isMinor(auth.user?.birth_date) && !opp.author?.identity_verified) {
+      alert(t("messages.minorBlocked"));
+      return;
+    }
+    const id = startConversation(opp.author_id);
+    router.push(`/messages/${id}`);
+  };
+
+  const submitApply = () => {
+    const app = applyToOpportunity(
+      opp.id,
+      message.trim() ||
+        (locale === "fr" ? "Candidature via PLAYCE" : "Application via PLAYCE")
+    );
+    if (app) {
+      setApplied(true);
+      setApplyOpen(false);
+    }
+  };
+
   return (
-    <div className="mx-auto max-w-4xl space-y-6 px-4 py-6 pb-28 md:pb-8">
+    <div className="mx-auto max-w-4xl space-y-6 px-4 py-4 pb-[calc(var(--nav-offset)+5rem)] md:py-6 md:pb-8">
       <div className="space-y-3">
+        <Link
+          href="/opportunities"
+          className="inline-flex items-center gap-1.5 text-sm text-slate-muted transition hover:text-white md:hidden"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          {t("opportunities.title")}
+        </Link>
         <div className="flex flex-wrap gap-2">
           <Badge variant={opp.type === "offer" ? "teal" : "blue"}>
             {opp.type === "offer"
@@ -67,7 +98,7 @@ export default function OpportunityDetailPage() {
             {opp.status === "open" ? "Open" : "Closed"}
           </Badge>
         </div>
-        <h1 className="font-display text-2xl font-bold">{opp.title}</h1>
+        <h1 className="font-display text-2xl font-bold leading-tight">{opp.title}</h1>
         <div className="flex items-center gap-3">
           <Avatar
             src={opp.author?.avatar_url}
@@ -124,7 +155,7 @@ export default function OpportunityDetailPage() {
 
       {!isOwner && auth.user && (
         <Card id="apply-block" className="hidden space-y-3 md:block">
-          {myApp || applied ? (
+          {hasApplied ? (
             <div className="space-y-2">
               <p className="font-medium text-playce-teal">
                 {t("opportunities.applySuccess")}
@@ -135,17 +166,7 @@ export default function OpportunityDetailPage() {
               <Button
                 variant="secondary"
                 className="w-full"
-                onClick={() => {
-                  if (
-                    isMinor(auth.user?.birth_date) &&
-                    !opp.author?.identity_verified
-                  ) {
-                    alert(t("messages.minorBlocked"));
-                    return;
-                  }
-                  const id = startConversation(opp.author_id);
-                  router.push(`/messages/${id}`);
-                }}
+                onClick={contactAuthor}
               >
                 {t("opportunities.contact")}
               </Button>
@@ -167,13 +188,7 @@ export default function OpportunityDetailPage() {
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder={t("opportunities.applyPlaceholder")}
               />
-              <Button
-                className="w-full"
-                onClick={() => {
-                  const app = applyToOpportunity(opp.id, message);
-                  if (app) setApplied(true);
-                }}
-              >
+              <Button className="w-full" onClick={submitApply}>
                 {t("common.apply")} — Sports ID
               </Button>
             </>
@@ -194,18 +209,11 @@ export default function OpportunityDetailPage() {
         </Card>
       )}
 
-      {/* Sticky mobile CTA */}
+      {/* Sticky mobile CTA — above floating nav */}
       {!isOwner && auth.user && (
-        <div className="safe-bottom fixed inset-x-0 bottom-[4.75rem] z-40 border-t border-white/10 bg-playce-dark/95 px-4 py-3 backdrop-blur md:hidden">
-          {myApp || applied ? (
-            <Button
-              className="w-full"
-              variant="secondary"
-              onClick={() => {
-                const id = startConversation(opp.author_id);
-                router.push(`/messages/${id}`);
-              }}
-            >
+        <div className="sticky-above-nav fixed inset-x-0 z-40 border-t border-white/10 bg-playce-dark/95 px-4 py-3 backdrop-blur md:hidden">
+          {hasApplied ? (
+            <Button className="w-full" variant="secondary" onClick={contactAuthor}>
               {t("opportunities.contact")}
             </Button>
           ) : auth.user.completeness < 60 ? (
@@ -215,19 +223,45 @@ export default function OpportunityDetailPage() {
               </Button>
             </Link>
           ) : (
-            <Button
-              className="w-full"
-              onClick={() => {
-                const app = applyToOpportunity(
-                  opp.id,
-                  message || (locale === "fr" ? "Candidature via PLAYCE" : "Application via PLAYCE")
-                );
-                if (app) setApplied(true);
-              }}
-            >
+            <Button className="w-full" onClick={() => setApplyOpen(true)}>
               {t("common.apply")} · Match {match.score}
             </Button>
           )}
+        </div>
+      )}
+
+      {/* Mobile apply sheet */}
+      {applyOpen && (
+        <div className="fixed inset-0 z-[70] md:hidden">
+          <button
+            className="absolute inset-0 bg-black/70"
+            onClick={() => setApplyOpen(false)}
+            aria-label="Close"
+          />
+          <div className="safe-bottom absolute inset-x-0 bottom-0 max-h-[85dvh] overflow-y-auto rounded-t-[28px] border border-white/10 bg-playce-dark px-4 pb-8 pt-3">
+            <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-white/20" />
+            <div className="mb-4 flex items-center justify-between">
+              <h2 className="font-display text-lg font-semibold">
+                {t("common.apply")}
+              </h2>
+              <button
+                onClick={() => setApplyOpen(false)}
+                className="rounded-full bg-white/5 p-2"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <p className="mb-3 text-sm text-slate-muted line-clamp-2">{opp.title}</p>
+            <Textarea
+              label={t("opportunities.applyMessage")}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder={t("opportunities.applyPlaceholder")}
+            />
+            <Button className="mt-4 w-full" size="lg" onClick={submitApply}>
+              {t("common.apply")} — Sports ID
+            </Button>
+          </div>
         </div>
       )}
     </div>

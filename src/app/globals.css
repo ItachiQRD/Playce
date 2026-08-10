@@ -13,7 +13,17 @@
   --surface: #1a2332;
   --surface-2: #243044;
   --border: rgba(255, 255, 255, 0.08);
-  --nav-offset: calc(5.75rem + env(safe-area-inset-bottom, 0px));
+  /* Capsule nav (~4.5rem) + floating gap (0.75rem) + safe area */
+  --nav-offset: calc(5.5rem + env(safe-area-inset-bottom, 0px));
+  --sticky-cta-offset: calc(var(--nav-offset) + 0.25rem);
+}
+
+.sticky-above-nav {
+  bottom: var(--sticky-cta-offset);
+}
+
+.pb-above-nav {
+  padding-bottom: calc(var(--nav-offset) + 4.5rem);
 }
 
 @theme inline {
@@ -172,13 +182,11 @@ h4,
 .chat-shell {
   height: 100dvh;
   max-height: 100dvh;
-  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 @media (min-width: 768px) {
   .chat-shell {
     height: calc(100dvh - 3.5rem);
     max-height: calc(100dvh - 3.5rem);
-    padding-bottom: 0;
   }
 }

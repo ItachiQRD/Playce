@@ -6,7 +6,7 @@ import {
   BadgeCheck,
   Heart,
   MapPin,
-  MessageCircle,
+  Search,
   Sparkles,
   Briefcase,
   ChevronUp,
@@ -31,7 +31,6 @@ export function ImmersiveDiscover() {
     awardSignal,
     getMatchScore,
     notifications,
-    conversations,
   } = useDemo();
   const { locale, t } = useI18n();
   const router = useRouter();
@@ -43,11 +42,6 @@ export function ImmersiveDiscover() {
   const lastSwipe = useRef(0);
   const discovered = useRef(0);
 
-  const unreadMsgs = auth.user
-    ? conversations
-        .filter((c) => c.participant_ids.includes(auth.user!.id))
-        .reduce((sum, c) => sum + (c.unread_count ?? 0), 0)
-    : 0;
   const unreadNotif = auth.user
     ? notifications.filter((n) => n.user_id === auth.user!.id && !n.read).length
     : 0;
@@ -129,6 +123,13 @@ export function ImmersiveDiscover() {
         </div>
         <div className="flex items-center gap-1.5">
           <Link
+            href="/search"
+            className="rounded-full bg-black/35 p-2 backdrop-blur"
+            aria-label="Search"
+          >
+            <Search className="h-5 w-5" />
+          </Link>
+          <Link
             href="/notifications"
             className="relative rounded-full bg-black/35 p-2 backdrop-blur"
             aria-label="Notifications"
@@ -137,18 +138,6 @@ export function ImmersiveDiscover() {
             {unreadNotif > 0 && (
               <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-playce-teal px-1 text-[9px] font-bold text-playce-black">
                 {unreadNotif}
-              </span>
-            )}
-          </Link>
-          <Link
-            href="/messages"
-            className="relative rounded-full bg-black/35 p-2 backdrop-blur"
-            aria-label="Messages"
-          >
-            <MessageCircle className="h-5 w-5" />
-            {unreadMsgs > 0 && (
-              <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-playce-teal px-1 text-[9px] font-bold text-playce-black">
-                {unreadMsgs}
               </span>
             )}
           </Link>
@@ -251,7 +240,7 @@ function DiscoverCard({
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/50" />
 
-        <div className="absolute inset-x-0 bottom-0 z-10 space-y-4 px-5 pb-40 pt-10 md:pb-16">
+        <div className="absolute inset-x-0 bottom-0 z-10 space-y-4 px-5 pb-above-nav pt-10 md:pb-16">
           <Badge variant="teal" className="backdrop-blur">
             {post.type}
           </Badge>
@@ -298,13 +287,6 @@ function DiscoverCard({
               />
               {post.likes_count}
             </button>
-            <button
-              onClick={onExpand}
-              className="flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 backdrop-blur"
-            >
-              <MessageCircle className="h-5 w-5" />
-              {post.comments_count}
-            </button>
             <Button size="sm" onClick={onOpen} className="ml-auto">
               Sports ID
             </Button>
@@ -319,8 +301,8 @@ function DiscoverCard({
     return (
       <div className="relative h-full w-full bg-playce-black">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(37,99,235,0.35),transparent_55%),#05070D]" />
-        <div className="absolute inset-0 flex flex-col justify-end px-5 pb-40 md:pb-16">
-          <div className="mb-auto mt-28 space-y-5">
+        <div className="absolute inset-0 flex flex-col justify-end px-5 pb-above-nav md:pb-16">
+          <div className="mb-auto mt-24 space-y-4">
             <div className="inline-flex items-center gap-2 rounded-full border border-electric-blue/40 bg-electric-blue/15 px-3 py-1 text-xs text-electric-blue">
               <Briefcase className="h-3.5 w-3.5" />
               {opp.type === "offer" ? t("opportunities.offers") : t("opportunities.demands")}
@@ -371,7 +353,7 @@ function DiscoverCard({
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,184,148,0.25),#05070D)]" />
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/30" />
-      <div className="absolute inset-x-0 bottom-0 flex flex-col items-center px-6 pb-40 text-center md:pb-16">
+      <div className="absolute inset-x-0 bottom-0 flex flex-col items-center px-6 pb-above-nav text-center md:pb-16">
         <Avatar src={profile.avatar_url} name={profile.full_name} size="xl" />
         <div className="mt-5 flex items-center gap-1">
           <h2 className="font-display text-2xl font-bold">{profile.full_name}</h2>

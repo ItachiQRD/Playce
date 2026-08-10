@@ -65,7 +65,11 @@
     "profile": "Profil",
     "search": "Recherche",
     "notifications": "Notifications",
-    "messages": "Messages"
+    "messages": "Messages",
+    "pulse": "Pulse",
+    "ops": "Ops",
+    "msgs": "Msgs",
+    "you": "Toi"
   },
   "feed": {
     "title": "Fil d'actualité",

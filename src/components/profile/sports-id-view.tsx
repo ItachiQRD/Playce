@@ -95,16 +95,16 @@ export function SportsIdView({
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="flex items-center gap-2">
             {isOwn ? (
               <>
-                <Link href="/profile/edit">
-                  <Button size="sm" variant="secondary">
+                <Link href="/profile/edit" className="flex-1 sm:flex-none">
+                  <Button size="sm" variant="secondary" className="w-full sm:w-auto">
                     {t("profile.edit")}
                   </Button>
                 </Link>
                 <Link href="/profile/settings">
-                  <Button size="sm" variant="ghost">
+                  <Button size="sm" variant="ghost" aria-label={t("profile.settings") ?? "Settings"}>
                     <Settings className="h-4 w-4" />
                   </Button>
                 </Link>
@@ -113,6 +113,7 @@ export function SportsIdView({
               <>
                 <Button
                   size="sm"
+                  className="flex-1 sm:flex-none"
                   onClick={() => {
                     if (!auth.user) return;
                     if (isMinor(profile.birth_date) && !auth.user.identity_verified) {
@@ -126,17 +127,23 @@ export function SportsIdView({
                   <MessageCircle className="h-4 w-4" />
                   {t("common.message")}
                 </Button>
-                <Button size="sm" variant="secondary">
+                <Button size="sm" variant="secondary" className="hidden sm:inline-flex">
                   {t("common.follow")}
                 </Button>
               </>
             )}
-            <Button size="sm" variant="ghost" onClick={() => setShowCard((s) => !s)}>
+            <Button
+              size="sm"
+              variant="ghost"
+              aria-label="QR"
+              onClick={() => setShowCard((s) => !s)}
+            >
               <QrCode className="h-4 w-4" />
             </Button>
             <Button
               size="sm"
               variant="ghost"
+              aria-label="Share"
               onClick={() => {
                 navigator.clipboard?.writeText(publicUrl);
                 alert(t("common.copied"));
