@@ -8,7 +8,7 @@ export function Card({
   return (
     <div
       className={cn(
-        "rounded-2xl border border-white/[0.08] bg-surface p-4 shadow-[0_8px_30px_rgba(0,0,0,0.25)]",
+        "rounded-3xl border border-white/[0.06] bg-surface p-4",
         className
       )}
       {...props}
@@ -79,7 +79,7 @@ export function Avatar({
         // eslint-disable-next-line @next/next/no-img-element
         <img src={src} alt={name} className="h-full w-full object-cover" />
       ) : (
-        <div className="flex h-full w-full items-center justify-center font-display font-semibold text-playce-teal">
+        <div className="flex h-full w-full items-center justify-center font-semibold text-playce-teal">
           {initials}
         </div>
       )}

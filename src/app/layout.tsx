@@ -1,17 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Sora } from "next/font/google";
+import { Outfit } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { AppShell } from "@/components/layout/app-shell";
 
-const inter = Inter({
-  variable: "--font-inter",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
-});
-
-const sora = Sora({
-  variable: "--font-sora",
-  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -36,7 +32,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0F172A",
+  themeColor: "#0A0A0B",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -45,7 +41,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className={`${inter.variable} ${sora.variable} h-full`} style={{ colorScheme: "dark" }}>
+    <html lang="fr" className={`${outfit.variable} h-full`} style={{ colorScheme: "dark" }}>
       <body className="min-h-full bg-playce-dark font-sans text-white antialiased">
         <Providers>
           <AppShell>{children}</AppShell>

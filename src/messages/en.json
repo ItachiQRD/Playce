@@ -66,10 +66,10 @@
     "search": "Search",
     "notifications": "Notifications",
     "messages": "Messages",
-    "pulse": "Pulse",
-    "ops": "Ops",
-    "msgs": "Msgs",
-    "you": "You"
+  "pulse": "Home",
+  "ops": "Ops",
+  "msgs": "Chat",
+  "you": "You"
   },
   "feed": {
     "title": "Feed",

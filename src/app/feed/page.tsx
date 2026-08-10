@@ -1,15 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useDemo } from "@/lib/demo-store";
 import { useI18n } from "@/lib/i18n";
 import { PostCard } from "@/components/feed/post-card";
 import { OpportunityCard, ProfileCard } from "@/components/cards/entity-cards";
 import { CompletenessBar, Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { ImmersiveDiscover } from "@/components/feed/immersive-discover";
+import { MobileHomeFeed } from "@/components/feed/mobile-home";
 
 export default function FeedPage() {
   const { auth, posts, profiles, opportunities, getMatchScore } = useDemo();
@@ -35,17 +35,20 @@ export default function FeedPage() {
 
   return (
     <>
-      {/* Mobile: immersive Pulse */}
       <div className="md:hidden">
-        <ImmersiveDiscover />
+        <MobileHomeFeed />
       </div>
 
-      {/* Desktop: layout classique */}
       <div className="mx-auto hidden max-w-5xl gap-8 px-4 py-8 md:grid lg:grid-cols-[1fr_300px]">
         <div className="space-y-6">
           <div className="flex items-end justify-between gap-4">
             <div>
-              <h1 className="font-display text-2xl font-bold">{t("feed.title")}</h1>
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/35">
+                PLAYCE
+              </p>
+              <h1 className="mt-1 text-2xl font-semibold tracking-tight">
+                {t("feed.title")}
+              </h1>
               <p className="mt-1 text-sm text-slate-muted">
                 Salut {auth.user.full_name.split(" ")[0]} — {t(`roles.${auth.user.role}`)}
               </p>
@@ -55,13 +58,8 @@ export default function FeedPage() {
             </Link>
           </div>
 
-          <Card className="border-playce-teal/30 bg-playce-teal/5 text-sm">
-            <p className="font-medium text-playce-teal">{t("feed.demoTitle")}</p>
-            <p className="mt-2 text-slate-muted">{t("feed.demoHint")}</p>
-          </Card>
-
           {auth.user.completeness < 80 && (
-            <Card className="space-y-4 border-warning/30 bg-warning/5">
+            <Card className="space-y-4 border-playce-teal/20 bg-playce-teal/[0.04]">
               <CompletenessBar value={auth.user.completeness} />
               <p className="text-sm text-slate-muted">{t("feed.completeHint")}</p>
               <Link href="/profile/edit">
@@ -75,10 +73,12 @@ export default function FeedPage() {
           {posts.length === 0 ? (
             <p className="text-slate-muted">{t("feed.empty")}</p>
           ) : (
-            <div className="space-y-5">
-              {posts.map((post) => (
-                <PostCard key={post.id} post={post} />
-              ))}
+            <div className="overflow-hidden rounded-3xl border border-white/[0.06] bg-surface/40">
+              <div className="divide-y divide-white/[0.05]">
+                {posts.map((post) => (
+                  <PostCard key={post.id} post={post} />
+                ))}
+              </div>
             </div>
           )}
         </div>
@@ -86,7 +86,7 @@ export default function FeedPage() {
         <aside className="hidden space-y-8 lg:block">
           <section className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="font-display text-sm font-semibold">{t("feed.discover")}</h2>
+              <h2 className="text-sm font-semibold">{t("feed.discover")}</h2>
               <Link href="/search" className="text-xs text-playce-teal">
                 {t("common.seeAll")}
               </Link>
@@ -100,9 +100,7 @@ export default function FeedPage() {
 
           <section className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="font-display text-sm font-semibold">
-                {t("feed.recommended")}
-              </h2>
+              <h2 className="text-sm font-semibold">{t("feed.recommended")}</h2>
               <Link href="/opportunities" className="text-xs text-playce-teal">
                 {t("common.seeAll")}
               </Link>

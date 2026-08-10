@@ -15,25 +15,22 @@ export function PwaRegister() {
   const [installed, setInstalled] = useState(false);
 
   useEffect(() => {
-    if (!("serviceWorker" in navigator)) return;
+    if ("serviceWorker" in navigator) {
+      const isLocal =
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1";
 
-    // Avoid SW hijacking HMR / Next chunks on localhost
-    const isLocal =
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1";
-
-    if (isLocal) {
-      navigator.serviceWorker.getRegistrations().then((regs) => {
-        regs.forEach((reg) => reg.unregister());
-      });
-      caches.keys().then((keys) => {
-        keys.forEach((key) => caches.delete(key));
-      });
-      return;
+      if (isLocal) {
+        navigator.serviceWorker.getRegistrations().then((regs) => {
+          regs.forEach((reg) => reg.unregister());
+        });
+        caches.keys().then((keys) => {
+          keys.forEach((key) => caches.delete(key));
+        });
+      } else {
+        navigator.serviceWorker.register("/sw.js").catch(() => undefined);
+      }
     }
-
-    navigator.serviceWorker.register("/sw.js").catch(() => undefined);
-  }, []);
 
     const onBeforeInstall = (e: Event) => {
       e.preventDefault();

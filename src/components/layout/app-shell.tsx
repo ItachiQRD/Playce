@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isPulseMobile = pathname === "/feed";
+  const isFeedMobile = pathname === "/feed";
   const isReels = pathname.startsWith("/reels");
   const isChat = /^\/messages\/[^/]+$/.test(pathname);
   const isBare =
@@ -17,21 +17,18 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <>
       <TopBar />
-      <div
-        className={cn(
-          "mx-auto",
-          isBare ? "max-w-none" : "flex max-w-6xl"
-        )}
-      >
+      <div className={cn("mx-auto", isBare ? "max-w-none" : "flex max-w-6xl")}>
         {!isBare && <SideNav />}
         <main
           className={cn(
             "flex-1 bg-playce-dark",
-            isPulseMobile || isReels || isChat
+            isReels || isChat
               ? "min-h-[100dvh] p-0 md:min-h-[calc(100dvh-3.5rem)]"
-              : isBare
-                ? "min-h-[100dvh]"
-                : "min-h-[calc(100dvh-3.5rem)] pb-28 md:pb-8"
+              : isFeedMobile
+                ? "min-h-[100dvh] p-0 md:min-h-[calc(100dvh-3.5rem)] md:pb-8"
+                : isBare
+                  ? "min-h-[100dvh]"
+                  : "min-h-[calc(100dvh-3.5rem)] pb-28 md:pb-8"
           )}
         >
           {children}

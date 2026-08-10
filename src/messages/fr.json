@@ -66,10 +66,10 @@
     "search": "Recherche",
     "notifications": "Notifications",
     "messages": "Messages",
-    "pulse": "Pulse",
-    "ops": "Ops",
-    "msgs": "Msgs",
-    "you": "Toi"
+  "pulse": "Home",
+  "ops": "Ops",
+  "msgs": "Chat",
+  "you": "Toi"
   },
   "feed": {
     "title": "Fil d'actualité",

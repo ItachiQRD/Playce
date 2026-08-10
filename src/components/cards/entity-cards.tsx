@@ -88,11 +88,11 @@ export function OpportunityCard({
             </p>
           </div>
           {(matchScore ?? opportunity.match_score) != null && (
-            <div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-xl bg-electric-blue/15 text-electric-blue">
+            <div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-2xl bg-playce-teal/15 text-playce-teal">
               <span className="text-sm font-bold tabular-nums">
                 {matchScore ?? opportunity.match_score}
               </span>
-              <span className="text-[9px] uppercase">{t("opportunities.match")}</span>
+              <span className="text-[9px] uppercase opacity-80">{t("opportunities.match")}</span>
             </div>
           )}
         </div>
