@@ -101,6 +101,9 @@ export function EmptyState({
 }) {
   return (
     <div className="flex flex-col items-center justify-center gap-3 rounded-3xl border border-dashed border-[var(--border)] bg-surface/60 px-6 py-14 text-center">
+      <div className="animate-float mb-1 flex h-14 w-14 items-center justify-center rounded-3xl bg-playce-teal/12 text-xl font-extrabold text-playce-teal">
+        P
+      </div>
       <h3 className="text-lg font-semibold tracking-tight">{title}</h3>
       {description && (
         <p className="max-w-sm text-sm text-slate-muted">{description}</p>

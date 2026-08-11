@@ -28,6 +28,7 @@ export function PostCard({ post, index = 0 }: { post: Post; index?: number }) {
   const [reason, setReason] = useState("spam");
   const [details, setDetails] = useState("");
   const [reported, setReported] = useState(false);
+  const [likePop, setLikePop] = useState(false);
   const author = post.author;
   const router = useRouter();
 
@@ -35,6 +36,12 @@ export function PostCard({ post, index = 0 }: { post: Post; index?: number }) {
 
   const isVideo =
     post.media_url?.startsWith("data:video") || post.media_url?.endsWith(".mp4");
+
+  const onLike = () => {
+    toggleLike(post.id);
+    setLikePop(true);
+    window.setTimeout(() => setLikePop(false), 420);
+  };
 
   return (
     <article
@@ -107,14 +114,15 @@ export function PostCard({ post, index = 0 }: { post: Post; index?: number }) {
       <div className="space-y-3 px-4 py-3">
         <div className="flex items-center gap-1">
           <button
-            onClick={() => toggleLike(post.id)}
-            className="rounded-full p-2 text-ink transition hover:bg-ink/[0.04] active:scale-90"
+            onClick={onLike}
+            className="pressable rounded-full p-2 text-ink transition hover:bg-ink/[0.04]"
             aria-label="Like"
           >
             <Heart
               className={cn(
                 "h-6 w-6",
-                post.liked_by_me && "fill-playce-teal text-playce-teal"
+                post.liked_by_me && "fill-playce-teal text-playce-teal",
+                likePop && "animate-heart-pop"
               )}
             />
           </button>

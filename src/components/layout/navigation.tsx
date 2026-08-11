@@ -77,11 +77,14 @@ export function BottomNav() {
                 <Link
                   href={href}
                   className={cn(
-                    "relative flex min-w-[56px] flex-col items-center gap-0.5 px-2 py-2 text-[10px] font-medium transition",
+                    "relative flex min-w-[56px] flex-col items-center gap-0.5 px-2 py-2 text-[10px] font-medium transition pressable",
                     active ? "text-playce-teal" : "text-slate-muted"
                   )}
                 >
-                  <Icon className="h-5 w-5" strokeWidth={active ? 2.4 : 1.8} />
+                  <Icon
+                    className={cn("h-5 w-5", active && "nav-active-icon")}
+                    strokeWidth={active ? 2.4 : 1.8}
+                  />
                   <span>{label}</span>
                   {badge > 0 && (
                     <span className="absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-playce-teal px-1 text-[9px] font-bold text-white">

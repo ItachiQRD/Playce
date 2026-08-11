@@ -204,7 +204,7 @@ export default function OpportunitiesPage() {
               className="mt-6 w-full"
               onClick={() => setFiltersOpen(false)}
             >
-              {t("common.continue")} ({filtered.length})
+              {t("opportunities.seeResults", { count: filtered.length })}
             </Button>
           </div>
         </div>

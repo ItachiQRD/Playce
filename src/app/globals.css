@@ -189,32 +189,32 @@ h4,
   box-shadow: 0 -1px 0 var(--border), 0 -12px 40px rgba(12, 14, 18, 0.06);
 }
 
-/* Glassmorphism surfaces */
+/* Glassmorphism — opaque enough for readable text (a11y > pure liquid glass) */
 .glass {
-  background: color-mix(in srgb, var(--surface) 72%, transparent);
-  border: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
-  backdrop-filter: blur(18px) saturate(1.35);
-  -webkit-backdrop-filter: blur(18px) saturate(1.35);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+  backdrop-filter: blur(16px) saturate(1.25);
+  -webkit-backdrop-filter: blur(16px) saturate(1.25);
   box-shadow:
-    0 1px 0 color-mix(in srgb, #fff 35%, transparent) inset,
-    0 10px 30px rgba(12, 14, 18, 0.06);
+    0 1px 0 color-mix(in srgb, #fff 45%, transparent) inset,
+    0 8px 24px rgba(12, 14, 18, 0.05);
 }
 
 .glass-strong {
-  background: color-mix(in srgb, var(--surface) 82%, transparent);
-  border: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
-  backdrop-filter: blur(24px) saturate(1.45);
-  -webkit-backdrop-filter: blur(24px) saturate(1.45);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+  backdrop-filter: blur(22px) saturate(1.3);
+  -webkit-backdrop-filter: blur(22px) saturate(1.3);
   box-shadow:
-    0 1px 0 color-mix(in srgb, #fff 40%, transparent) inset,
-    0 16px 40px rgba(12, 14, 18, 0.08);
+    0 1px 0 color-mix(in srgb, #fff 50%, transparent) inset,
+    0 12px 32px rgba(12, 14, 18, 0.07);
 }
 
 .glass-chip {
-  background: color-mix(in srgb, var(--surface) 65%, transparent);
-  border: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
-  backdrop-filter: blur(12px) saturate(1.2);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  background: color-mix(in srgb, var(--surface) 80%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+  backdrop-filter: blur(10px) saturate(1.15);
+  -webkit-backdrop-filter: blur(10px) saturate(1.15);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -226,18 +226,18 @@ h4,
   }
 
   .glass {
-    background: color-mix(in srgb, var(--surface) 55%, transparent);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .glass-strong {
-    background: color-mix(in srgb, var(--surface) 70%, transparent);
+    background: color-mix(in srgb, var(--surface) 82%, transparent);
     border-color: rgba(255, 255, 255, 0.12);
   }
 
+  .glass-strong {
+    background: color-mix(in srgb, var(--surface) 90%, transparent);
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+
   .glass-chip {
-    background: color-mix(in srgb, var(--surface) 50%, transparent);
-    border-color: rgba(255, 255, 255, 0.1);
+    background: color-mix(in srgb, var(--surface) 75%, transparent);
+    border-color: rgba(255, 255, 255, 0.12);
   }
 }
 
@@ -288,4 +288,93 @@ h4,
 .tap-scale:active {
   transform: scale(0.985);
   opacity: 0.92;
+}
+
+.pressable {
+  transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pressable:active {
+  transform: scale(0.96);
+}
+
+@keyframes heartPop {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.35);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-heart-pop {
+  animation: heartPop 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes navBounce {
+  0% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-3px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.nav-active-icon {
+  animation: navBounce 0.35s ease;
+}
+
+@keyframes stampFill {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-stamp {
+  animation: stampFill 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes floatSoft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-float {
+  animation: floatSoft 3.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-soft-in,
+  .animate-fade-up,
+  .animate-slide-card,
+  .animate-heart-pop,
+  .nav-active-icon,
+  .animate-stamp,
+  .animate-float {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .pressable:active,
+  .tap-scale:active,
+  .publish-orb:active {
+    transform: none;
+  }
 }

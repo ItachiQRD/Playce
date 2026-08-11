@@ -39,11 +39,18 @@
     "hasAccount": "Already have an account?",
     "demoLogin": "Enter PLAYCE",
     "switchUser": "Switch demo user",
-    "landingSubtitle": "Create your Sports ID. Be seen. Be found. Connect to real opportunities."
+    "landingSubtitle": "Create your Sports ID. Be seen. Be found. Connect to real opportunities.",
+    "buildFirst": "Build your Sports ID before creating the account.",
+    "buildIdentity": "Identity",
+    "saveAccount": "Account",
+    "ikeaHint": "These choices are already yours — you'll refine the rest right after.",
+    "namePlaceholder": "e.g. Amine Benali",
+    "saveSportsId": "Save my Sports ID"
   },
   "onboarding": {
     "title": "Create your Sports ID",
     "subtitle": "A few details to become visible and credible.",
+    "subtitleMomentum": "Account created — you already have a head start. Let's finish your Sports ID.",
     "photo": "Profile photo",
     "location": "Location",
     "level": "Level",
@@ -55,7 +62,13 @@
     "city": "City",
     "country": "Country",
     "bio": "Bio",
-    "step": "Step"
+    "bioPlaceholder": "Introduce yourself in a few lines…",
+    "step": "Step",
+    "stampAccount": "Account",
+    "stampSport": "Sport",
+    "defaultHint": "Pre-filled with the most common choice — adjust if needed.",
+    "progressLabel": "Sports ID progress",
+    "finish": "Activate my Sports ID"
   },
   "nav": {
     "home": "Home",
@@ -79,8 +92,11 @@
     "welcomePrefix": "Hi",
     "demoHint": "Use the Demo button (bottom right) to switch athlete ↔ club ↔ admin.",
     "demoTitle": "Demo ready to test",
-    "completeProfile": "Complete my profile",
-    "completeHint": "Complete your Sports ID to apply and maximize visibility.",
+    "completeProfile": "Don't lose my visibility",
+    "completeHint": "Without a complete Sports ID, clubs scroll past you — you're missing matches already open.",
+    "completeTitle": "Visibility at risk",
+    "emptyTitle": "Pulse is quiet",
+    "emptyHint": "Share a highlight — your Signal rises from the first post.",
     "comment": "Comment…",
     "send": "Send",
     "viewComments": "View {{count}} comments"
@@ -120,6 +136,7 @@
     "demands": "Demands",
     "create": "Create opportunity",
     "filters": "Filters",
+    "seeResults": "See {{count}} opportunities",
     "match": "Match",
     "deadline": "Deadline",
     "applications": "Applications",
@@ -259,6 +276,11 @@
   "landing": {
     "cta": "CREATE YOUR SPORTS ID",
     "secondary": "Try the demo",
-    "line": "Talent is everywhere. Opportunity isn't."
+    "line": "Talent is everywhere. Opportunity isn't.",
+    "previewTitle": "Instant preview — no account wall",
+    "previewBody": "Here's what you unlock on entry: matches, profiles, Signal. The demo gives value first.",
+    "previewOps": "{{count}} open opportunities",
+    "previewProfiles": "Sports IDs ready to discover",
+    "previewCta": "Try without friction"
   }
 }

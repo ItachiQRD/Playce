@@ -39,11 +39,18 @@
     "hasAccount": "Déjà un compte ?",
     "demoLogin": "Entrer dans PLAYCE",
     "switchUser": "Changer d'utilisateur démo",
-    "landingSubtitle": "Crée ton Sports ID. Sois visible. Sois trouvé. Connecte-toi à des opportunités concrètes."
+    "landingSubtitle": "Crée ton Sports ID. Sois visible. Sois trouvé. Connecte-toi à des opportunités concrètes.",
+    "buildFirst": "Construis ton Sports ID avant de créer le compte.",
+    "buildIdentity": "Identité",
+    "saveAccount": "Compte",
+    "ikeaHint": "Ces choix sont déjà à toi — tu peaufineras le reste juste après.",
+    "namePlaceholder": "Ex. Amine Benali",
+    "saveSportsId": "Sauvegarder mon Sports ID"
   },
   "onboarding": {
     "title": "Crée ton Sports ID",
     "subtitle": "Quelques infos pour être visible et crédible.",
+    "subtitleMomentum": "Compte créé — tu as déjà une avance. Finissons ton Sports ID.",
     "photo": "Photo de profil",
     "location": "Localisation",
     "level": "Niveau",
@@ -55,7 +62,13 @@
     "city": "Ville",
     "country": "Pays",
     "bio": "Bio",
-    "step": "Étape"
+    "bioPlaceholder": "Présente-toi en quelques lignes…",
+    "step": "Étape",
+    "stampAccount": "Compte",
+    "stampSport": "Sport",
+    "defaultHint": "Prérempli avec le choix le plus courant — ajuste si besoin.",
+    "progressLabel": "Avancée Sports ID",
+    "finish": "Activer mon Sports ID"
   },
   "nav": {
     "home": "Accueil",
@@ -79,8 +92,11 @@
     "welcomePrefix": "Salut",
     "demoHint": "Utilisez le bouton Demo (bas à droite) pour basculer athlète ↔ club ↔ admin.",
     "demoTitle": "Mode démo prêt à tester",
-    "completeProfile": "Compléter mon profil",
-    "completeHint": "Complète ton Sports ID pour candidater et maximiser ta visibilité.",
+    "completeProfile": "Ne pas perdre ma visibilité",
+    "completeHint": "Sans Sports ID complet, les clubs te passent à côté — tu rates des matchs déjà ouverts.",
+    "completeTitle": "Visibilité en jeu",
+    "emptyTitle": "Le Pulse est calme",
+    "emptyHint": "Publie un highlight — ton Signal monte dès le premier post.",
     "comment": "Commenter…",
     "send": "Envoyer",
     "viewComments": "Voir {{count}} commentaires"
@@ -120,6 +136,7 @@
     "demands": "Demandes",
     "create": "Créer une opportunité",
     "filters": "Filtres",
+    "seeResults": "Voir {{count}} opportunités",
     "match": "Match",
     "deadline": "Date limite",
     "applications": "Candidatures",
@@ -259,6 +276,11 @@
   "landing": {
     "cta": "CREATE YOUR SPORTS ID",
     "secondary": "Découvrir la démo",
-    "line": "Talent is everywhere. Opportunity isn't."
+    "line": "Talent is everywhere. Opportunity isn't.",
+    "previewTitle": "Aperçu immédiat — sans compte",
+    "previewBody": "Voici ce que tu débloques dès l'entrée : matchs, profils, Signal. La démo te donne la valeur d'abord.",
+    "previewOps": "{{count}} opportunités ouvertes",
+    "previewProfiles": "Sports ID prêts à découvrir",
+    "previewCta": "Essayer sans friction"
   }
 }

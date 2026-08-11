@@ -5,7 +5,7 @@ import { useDemo } from "@/lib/demo-store";
 import { useI18n } from "@/lib/i18n";
 import { PostCard } from "@/components/feed/post-card";
 import { OpportunityCard, ProfileCard } from "@/components/cards/entity-cards";
-import { CompletenessBar, Avatar, Card } from "@/components/ui/card";
+import { CompletenessBar, Avatar, Card, EmptyState } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -86,14 +86,24 @@ export default function FeedPage() {
         </section>
 
         {auth.user.completeness < 80 && (
-          <div className="glass space-y-3 rounded-3xl border-playce-teal/20 p-4">
-            <CompletenessBar value={auth.user.completeness} />
-            <p className="text-sm text-slate-muted">{t("feed.completeHint")}</p>
-            <Link href="/profile/edit">
-              <Button size="sm" variant="outline">
-                {t("feed.completeProfile")}
-              </Button>
-            </Link>
+          <div className="glass space-y-3 rounded-3xl border-playce-teal/25 p-4">
+            <div className="flex items-start gap-3">
+              <div className="animate-float flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-playce-teal text-sm font-extrabold text-white">
+                P
+              </div>
+              <div className="min-w-0 flex-1 space-y-2">
+                <p className="text-sm font-semibold tracking-tight text-playce-teal">
+                  {t("feed.completeTitle")}
+                </p>
+                <CompletenessBar value={Math.max(auth.user.completeness, 18)} />
+                <p className="text-sm text-slate-muted">{t("feed.completeHint")}</p>
+                <Link href="/profile/edit">
+                  <Button size="sm" variant="outline">
+                    {t("feed.completeProfile")}
+                  </Button>
+                </Link>
+              </div>
+            </div>
           </div>
         )}
 
@@ -111,7 +121,15 @@ export default function FeedPage() {
 
         <div className="space-y-4">
           {posts.length === 0 ? (
-            <p className="py-12 text-center text-slate-muted">{t("feed.empty")}</p>
+            <EmptyState
+              title={t("feed.emptyTitle")}
+              description={t("feed.emptyHint")}
+              action={
+                <Button size="sm" onClick={() => router.push("/publish")}>
+                  {t("common.publish")}
+                </Button>
+              }
+            />
           ) : (
             posts.map((post, i) => (
               <div

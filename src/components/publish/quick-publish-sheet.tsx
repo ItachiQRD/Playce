@@ -66,6 +66,13 @@ export function QuickPublishSheet({
             <p className="text-xs font-medium text-playce-teal">
               +{mode === "reel" ? 35 : 25} Signal · streak {signal.streak}d
             </p>
+            {signal.streak > 0 && (
+              <p className="mt-1 text-[11px] text-slate-muted">
+                {locale === "fr"
+                  ? `Publie aujourd'hui — ne casse pas ta série de ${signal.streak} j.`
+                  : `Post today — don't break your ${signal.streak}-day streak.`}
+              </p>
+            )}
           </div>
           <button
             onClick={onClose}

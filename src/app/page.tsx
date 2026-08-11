@@ -10,7 +10,7 @@ import { ArrowRight, BadgeCheck, Briefcase, Sparkles } from "lucide-react";
 import { track } from "@/lib/analytics";
 
 export default function LandingPage() {
-  const { auth, loginAs } = useDemo();
+  const { auth, loginAs, opportunities, profiles } = useDemo();
   const { t, locale, setLocale } = useI18n();
   const router = useRouter();
   const [ready, setReady] = useState(false);
@@ -37,9 +37,13 @@ export default function LandingPage() {
     router.push("/feed");
   };
 
+  const openOps = opportunities.filter((o) => o.status === "open").length;
+  const publicProfiles = profiles.filter(
+    (p) => p.role !== "admin" && !p.is_suspended
+  ).length;
+
   return (
     <div className="bg-canvas text-ink">
-      {/* Hero */}
       <section className="relative min-h-[100dvh] overflow-hidden">
         <div className="absolute inset-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -63,7 +67,7 @@ export default function LandingPage() {
             </div>
             <button
               onClick={() => setLocale(locale === "fr" ? "en" : "fr")}
-              className="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-medium text-white backdrop-blur"
+              className="pressable rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-medium text-white backdrop-blur"
             >
               {locale === "fr" ? "EN" : "FR"}
             </button>
@@ -106,8 +110,41 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Features scroll */}
-      <section className="mx-auto max-w-5xl space-y-16 px-5 py-20 md:px-10">
+      {/* Reciprocity: value before ask */}
+      <section className="mx-auto max-w-5xl px-5 py-12 md:px-10">
+        <div className="glass animate-soft-in rounded-[32px] p-6 md:p-8">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-playce-teal">
+            {t("landing.previewTitle")}
+          </p>
+          <p className="mt-2 max-w-xl text-sm text-slate-muted">
+            {t("landing.previewBody")}
+          </p>
+          <div className="mt-6 grid gap-3 sm:grid-cols-2">
+            <div className="rounded-2xl bg-playce-teal/8 px-4 py-4">
+              <p className="text-2xl font-extrabold tabular-nums tracking-tight">
+                {openOps}
+              </p>
+              <p className="mt-1 text-sm text-slate-muted">
+                {t("landing.previewOps", { count: openOps })}
+              </p>
+            </div>
+            <div className="rounded-2xl bg-electric-blue/8 px-4 py-4">
+              <p className="text-2xl font-extrabold tabular-nums tracking-tight">
+                {publicProfiles}
+              </p>
+              <p className="mt-1 text-sm text-slate-muted">
+                {t("landing.previewProfiles")}
+              </p>
+            </div>
+          </div>
+          <Button className="mt-6" size="lg" onClick={enterDemo}>
+            {t("landing.previewCta")}
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-5xl space-y-16 px-5 pb-20 md:px-10">
         <div className="animate-fade-up max-w-lg" style={{ animationDelay: "0s", opacity: 1 }}>
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-playce-teal">
             {t("common.tagline")}
@@ -146,7 +183,7 @@ export default function LandingPage() {
           ].map(({ icon: Icon, title, body }, i) => (
             <div
               key={title}
-              className="animate-soft-in rounded-[28px] border border-[var(--border)] bg-surface p-6"
+              className="glass animate-soft-in rounded-[28px] p-6"
               style={{ animationDelay: `${0.1 + i * 0.1}s` }}
             >
               <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-playce-teal/10 text-playce-teal">
@@ -161,7 +198,9 @@ export default function LandingPage() {
         <div className="flex flex-col items-start gap-4 rounded-[32px] bg-ink px-6 py-10 text-white md:flex-row md:items-center md:justify-between md:px-10">
           <div>
             <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
-              {locale === "fr" ? "Prêt à être vu ?" : "Ready to be seen?"}
+              {locale === "fr"
+                ? "Chaque jour sans Sports ID, tu perds des matchs."
+                : "Every day without a Sports ID, you miss matches."}
             </h2>
             <p className="mt-2 text-sm text-white/65">
               {t("auth.landingSubtitle")}
