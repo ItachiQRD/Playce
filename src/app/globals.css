@@ -50,7 +50,7 @@
 }
 
 html {
-  color-scheme: only light;
+  color-scheme: light;
   background: var(--canvas);
 }
 
@@ -62,6 +62,29 @@ body {
   min-height: 100dvh;
   overscroll-behavior-y: none;
   -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --playce-dark: #0f172a;
+    --playce-black: #0f172a;
+    --canvas: #0b1220;
+    --surface: #0f172a;
+    --surface-2: #111c2e;
+    --ink: #e5e7eb;
+    --slate: #94a3b8;
+    --border: rgba(255, 255, 255, 0.08);
+  }
+
+  html {
+    color-scheme: dark;
+    background: var(--canvas);
+  }
+
+  body {
+    background: var(--canvas) !important;
+    color: var(--ink);
+  }
 }
 
 h1,

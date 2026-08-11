@@ -41,7 +41,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className={`${jakarta.variable} h-full`} style={{ colorScheme: "light" }}>
+    <html lang="fr" className={`${jakarta.variable} h-full`} style={{ colorScheme: "auto" }}>
       <body className="min-h-full bg-canvas font-sans text-ink antialiased">
         <Providers>
           <AppShell>{children}</AppShell>

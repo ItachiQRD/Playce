@@ -76,15 +76,18 @@
     "discover": "Profils à découvrir",
     "recommended": "Opportunités recommandées",
     "empty": "Aucune publication pour le moment",
+    "welcomePrefix": "Salut",
     "demoHint": "Utilisez le bouton Demo (bas à droite) pour basculer athlète ↔ club ↔ admin.",
     "demoTitle": "Mode démo prêt à tester",
     "completeProfile": "Compléter mon profil",
     "completeHint": "Complète ton Sports ID pour candidater et maximiser ta visibilité.",
     "comment": "Commenter…",
-    "send": "Envoyer"
+    "send": "Envoyer",
+    "viewComments": "Voir {{count}} commentaires"
   },
   "profile": {
     "sportsId": "Sports ID",
+    "completenessLabel": "Complétude du profil",
     "experience": "Expérience",
     "stats": "Statistiques",
     "media": "Médias",
@@ -165,6 +168,15 @@
     "emptyHint": "Candidez à une opportunité ou contactez un profil pour démarrer.",
     "notFound": "Conversation introuvable",
     "minorBlocked": "Contact direct limité pour les profils mineurs."
+  },
+  "comments": {
+    "title": "Commentaires",
+    "aboutPost": "Conversation",
+    "empty": "Pas encore de commentaires",
+    "emptyHint": "Sois le premier à commenter.",
+    "placeholder": "Écrire un commentaire…",
+    "send": "Envoyer",
+    "notFound": "Post introuvable"
   },
   "notifications": {
     "title": "Notifications",

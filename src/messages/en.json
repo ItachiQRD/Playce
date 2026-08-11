@@ -76,15 +76,18 @@
     "discover": "People to discover",
     "recommended": "Recommended opportunities",
     "empty": "No posts yet",
+    "welcomePrefix": "Hi",
     "demoHint": "Use the Demo button (bottom right) to switch athlete ↔ club ↔ admin.",
     "demoTitle": "Demo ready to test",
     "completeProfile": "Complete my profile",
     "completeHint": "Complete your Sports ID to apply and maximize visibility.",
     "comment": "Comment…",
-    "send": "Send"
+    "send": "Send",
+    "viewComments": "View {{count}} comments"
   },
   "profile": {
     "sportsId": "Sports ID",
+    "completenessLabel": "Profile completeness",
     "experience": "Experience",
     "stats": "Statistics",
     "media": "Media",
@@ -165,6 +168,15 @@
     "emptyHint": "Apply to an opportunity or contact a profile to start.",
     "notFound": "Conversation not found",
     "minorBlocked": "Direct contact limited for minor profiles."
+  },
+  "comments": {
+    "title": "Comments",
+    "aboutPost": "Comment thread",
+    "empty": "No comments yet",
+    "emptyHint": "Be the first to comment.",
+    "placeholder": "Write a comment…",
+    "send": "Send",
+    "notFound": "Post not found"
   },
   "notifications": {
     "title": "Notifications",

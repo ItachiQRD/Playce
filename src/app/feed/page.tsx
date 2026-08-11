@@ -79,7 +79,9 @@ export default function FeedPage() {
           <div>
             <h1 className="text-2xl font-bold tracking-tight">{t("feed.title")}</h1>
             <p className="mt-1 text-sm text-slate-muted">
-              Salut {auth.user.full_name.split(" ")[0]}
+              {t("feed.welcomePrefix")} {auth.user.full_name.split(" ")[0]}
+              {" — "}
+              {t(`roles.${auth.user.role}`)}
             </p>
           </div>
           <Link href="/publish">

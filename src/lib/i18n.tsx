@@ -20,7 +20,10 @@ const dictionaries: Record<Locale, Messages> = { fr, en };
 interface I18nContextValue {
   locale: Locale;
   setLocale: (locale: Locale) => void;
-  t: (path: string) => string;
+  t: (
+    path: string,
+    vars?: Record<string, string | number>
+  ) => string;
   messages: Messages;
 }
 
@@ -37,6 +40,14 @@ function getByPath(obj: unknown, path: string): string {
     }
   }
   return typeof cur === "string" ? cur : path;
+}
+
+function applyVars(input: string, vars?: Record<string, string | number>) {
+  if (!vars) return input;
+  return input.replace(/\{\{(\w+)\}\}/g, (_, key: string) => {
+    const v = vars[key];
+    return v === undefined ? `{{${key}}}` : String(v);
+  });
 }
 
 export function I18nProvider({ children }: { children: ReactNode }) {
@@ -59,7 +70,8 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     () => ({
       locale,
       setLocale,
-      t: (path: string) => getByPath(messages, path),
+      t: (path: string, vars?: Record<string, string | number>) =>
+        applyVars(getByPath(messages, path), vars),
       messages,
     }),
     [locale, setLocale, messages]

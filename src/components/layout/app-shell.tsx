@@ -9,6 +9,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const isFeed = pathname === "/feed";
   const isReels = pathname.startsWith("/reels");
   const isChat = /^\/messages\/[^/]+$/.test(pathname);
+  const isComments = /^\/comments\/[^/]+$/.test(pathname);
   const isBare =
     pathname === "/" ||
     pathname.startsWith("/auth") ||
@@ -22,7 +23,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <main
           className={cn(
             "flex-1 bg-canvas",
-            isReels || isChat
+            isReels || isChat || isComments
               ? "min-h-[100dvh] p-0 md:min-h-[calc(100dvh-3.5rem)]"
               : isBare
                 ? "min-h-[100dvh]"

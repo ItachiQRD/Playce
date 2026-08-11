@@ -18,19 +18,18 @@ import { cn, formatRelativeDate } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n";
 import { useState } from "react";
 import { track } from "@/lib/analytics";
+import { useRouter } from "next/navigation";
 
 export function PostCard({ post, index = 0 }: { post: Post; index?: number }) {
-  const { toggleLike, addComment, comments, createReport } = useDemo();
+  const { toggleLike, createReport } = useDemo();
   const { locale, t } = useI18n();
-  const [showComments, setShowComments] = useState(false);
-  const [comment, setComment] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const [reportOpen, setReportOpen] = useState(false);
   const [reason, setReason] = useState("spam");
   const [details, setDetails] = useState("");
   const [reported, setReported] = useState(false);
-  const postComments = comments.filter((c) => c.post_id === post.id);
   const author = post.author;
+  const router = useRouter();
 
   if (!author) return null;
 
@@ -120,7 +119,7 @@ export function PostCard({ post, index = 0 }: { post: Post; index?: number }) {
             />
           </button>
           <button
-            onClick={() => setShowComments((s) => !s)}
+            onClick={() => router.push(`/comments/${post.id}`)}
             className="rounded-full p-2 text-ink transition hover:bg-ink/[0.04] active:scale-90"
             aria-label="Comment"
           >
@@ -157,58 +156,15 @@ export function PostCard({ post, index = 0 }: { post: Post; index?: number }) {
           )}
         </div>
 
-        {post.comments_count > 0 && !showComments && (
-          <button
-            onClick={() => setShowComments(true)}
-            className="text-sm text-slate-muted"
+        {post.comments_count > 0 && (
+          <Link
+            href={`/comments/${post.id}`}
+            className="text-sm font-semibold text-slate-muted transition hover:text-ink"
           >
-            Voir les {post.comments_count} commentaires
-          </button>
+            {t("feed.viewComments", { count: post.comments_count })}
+          </Link>
         )}
       </div>
-
-      {showComments && (
-        <div className="space-y-3 border-t border-[var(--border)] px-4 py-3">
-          {postComments.map((c) => (
-            <div key={c.id} className="flex gap-2.5">
-              <Avatar
-                src={c.author?.avatar_url}
-                name={c.author?.full_name ?? "?"}
-                size="sm"
-              />
-              <div className="min-w-0 flex-1">
-                <p className="text-sm leading-snug">
-                  <span className="font-semibold">{c.author?.full_name}</span>{" "}
-                  {c.content}
-                </p>
-              </div>
-            </div>
-          ))}
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (!comment.trim()) return;
-              addComment(post.id, comment.trim());
-              setComment("");
-            }}
-            className="flex gap-2"
-          >
-            <input
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              placeholder={t("feed.comment")}
-              className="flex-1 rounded-full border border-[var(--border)] bg-canvas px-4 py-2.5 text-sm outline-none focus:border-playce-teal/40"
-            />
-            <button
-              type="submit"
-              className="px-2 text-sm font-semibold text-playce-teal disabled:opacity-40"
-              disabled={!comment.trim()}
-            >
-              {t("feed.send")}
-            </button>
-          </form>
-        </div>
-      )}
 
       {reportOpen && (
         <div className="space-y-3 border-t border-[var(--border)] px-4 py-4">

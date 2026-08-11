@@ -1,5 +1,8 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { HTMLAttributes } from "react";
+import { useI18n } from "@/lib/i18n";
 
 export function Card({
   className,
@@ -107,13 +110,20 @@ export function EmptyState({
   );
 }
 
-export function CompletenessBar({ value }: { value: number }) {
+export function CompletenessBar({
+  value,
+  label,
+}: {
+  value: number;
+  label?: string;
+}) {
+  const { t } = useI18n();
   const color =
     value >= 80 ? "bg-success" : value >= 60 ? "bg-playce-teal" : "bg-warning";
   return (
     <div className="space-y-1.5">
       <div className="flex justify-between text-xs text-slate-muted">
-        <span>Complétude du profil</span>
+        <span>{label ?? t("profile.completenessLabel")}</span>
         <span className="font-semibold text-ink">{value}%</span>
       </div>
       <div className="h-1.5 overflow-hidden rounded-full bg-surface-2">

@@ -38,6 +38,7 @@ export function BottomNav() {
     pathname.startsWith("/onboarding") ||
     pathname === "/" ||
     pathname.startsWith("/p/") ||
+    /^\/comments\/[^/]+$/.test(pathname) ||
     /^\/messages\/[^/]+$/.test(pathname);
 
   if (hide) return null;
@@ -107,6 +108,7 @@ export function TopBar() {
     pathname === "/" ||
     pathname.startsWith("/reels") ||
     pathname === "/feed" ||
+    /^\/comments\/[^/]+$/.test(pathname) ||
     /^\/messages\/[^/]+$/.test(pathname);
 
   if (hide || !auth.user) return null;
