@@ -122,7 +122,7 @@ export function TopBar() {
   return (
     <header className="glass-strong sticky top-0 z-40 border-b border-[var(--border)]">
       <div className="safe-top">
-        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 px-4">
+        <div className="mx-auto flex h-14 max-w-[1600px] items-center justify-between gap-3 px-4 md:px-6">
           <Link href="/feed" className="flex items-center gap-2.5">
             <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-playce-teal text-sm font-extrabold text-white">
               P
@@ -204,7 +204,7 @@ export function SideNav() {
   ];
 
   return (
-    <aside className="glass sticky top-14 hidden h-[calc(100dvh-3.5rem)] w-56 shrink-0 border-r border-[var(--border)] p-4 md:block lg:w-64">
+    <aside className="glass sticky top-14 hidden h-[calc(100dvh-3.5rem)] w-52 shrink-0 border-r border-[var(--border)] p-4 md:block lg:w-56">
       <nav className="space-y-1">
         {items.map(({ href, label, icon: Icon }) => {
           const active =

@@ -18,7 +18,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <>
       <TopBar />
-      <div className={cn("mx-auto", isBare ? "max-w-none" : "flex max-w-6xl")}>
+      <div className={cn("mx-auto", isBare ? "max-w-none" : "flex max-w-[1600px]")}>
         {!isBare && <SideNav />}
         <main
           className={cn(

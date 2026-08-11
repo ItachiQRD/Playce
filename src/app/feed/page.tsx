@@ -34,7 +34,7 @@ export default function FeedPage() {
     .slice(0, 3);
 
   return (
-    <div className="mx-auto max-w-3xl space-y-5 px-4 py-5 md:max-w-5xl md:space-y-6 md:py-8 lg:grid lg:grid-cols-[1fr_280px] lg:gap-8">
+    <div className="mx-auto max-w-3xl space-y-5 px-4 py-5 md:max-w-6xl md:space-y-6 md:px-6 md:py-8 lg:grid lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-10">
       <div className="min-w-0 space-y-5">
         <div className="flex items-end justify-between gap-3">
           <div>

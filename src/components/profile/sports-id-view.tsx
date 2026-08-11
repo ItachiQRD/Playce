@@ -59,8 +59,8 @@ export function SportsIdView({
   const minor = isMinor(profile.birth_date);
 
   return (
-    <div className="mx-auto max-w-3xl">
-      <div className="relative h-40 overflow-hidden bg-playce-black sm:h-52 sm:rounded-b-3xl">
+    <div className="mx-auto max-w-5xl">
+      <div className="relative h-44 overflow-hidden bg-playce-black sm:h-52 md:rounded-3xl">
         {profile.cover_url ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img

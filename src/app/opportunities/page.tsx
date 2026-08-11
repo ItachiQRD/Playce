@@ -109,7 +109,7 @@ export default function OpportunitiesPage() {
   );
 
   return (
-    <div className="mx-auto max-w-3xl space-y-5 px-4 py-5 md:space-y-6 md:py-8">
+    <div className="mx-auto max-w-3xl space-y-5 px-4 py-5 md:max-w-5xl md:space-y-6 md:px-6 md:py-8">
       <div className="space-y-3">
         <div className="flex items-start justify-between gap-3">
           <h1 className="font-display text-2xl font-bold leading-tight">
@@ -164,7 +164,7 @@ export default function OpportunitiesPage() {
 
       <div className="hidden md:block">{filterForm}</div>
 
-      <div className="space-y-4">
+      <div className="space-y-6">
         {filtered.map((o) => (
           <OpportunityCard
             key={o.id}

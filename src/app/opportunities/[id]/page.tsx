@@ -79,7 +79,7 @@ export default function OpportunityDetailPage() {
   };
 
   return (
-    <div className="mx-auto max-w-4xl space-y-6 px-4 py-4 pb-[calc(var(--nav-offset)+5rem)] md:py-6 md:pb-8">
+    <div className="mx-auto max-w-4xl space-y-6 px-4 py-4 pb-[calc(var(--nav-offset)+5rem)] md:max-w-5xl md:px-6 md:py-6 md:pb-8">
       <div className="space-y-3">
         <Link
           href="/opportunities"
