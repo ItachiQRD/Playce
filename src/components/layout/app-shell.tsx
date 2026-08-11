@@ -28,7 +28,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 ? "min-h-[100dvh]"
                 : isFeed
                   ? "min-h-[100dvh] md:min-h-[calc(100dvh-3.5rem)]"
-                  : "min-h-[calc(100dvh-3.5rem)] pb-28 md:pb-8"
+                  : "min-h-[calc(100dvh-3.5rem)] overflow-x-hidden pb-[calc(var(--nav-offset)+0.75rem)] md:pb-8"
           )}
         >
           {children}

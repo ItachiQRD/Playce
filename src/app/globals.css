@@ -15,7 +15,8 @@
   --surface: #ffffff;
   --surface-2: #e8eaee;
   --border: rgba(12, 14, 18, 0.08);
-  --nav-offset: calc(4.75rem + env(safe-area-inset-bottom, 0px));
+  /* Bottom nav height (4.25rem) + home indicator safe-area */
+  --nav-offset: calc(4.25rem + env(safe-area-inset-bottom, 0px));
   --sticky-cta-offset: calc(var(--nav-offset) + 0.25rem);
 }
 
