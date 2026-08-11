@@ -17,12 +17,12 @@ export interface SignalRank {
 }
 
 export const SIGNAL_RANKS: SignalRank[] = [
-  { id: "echo", min: 0, label_fr: "Écho", label_en: "Echo", color: "#64748B" },
-  { id: "pulse", min: 50, label_fr: "Pulse", label_en: "Pulse", color: "#00B894" },
+  { id: "echo", min: 0, label_fr: "Écho", label_en: "Echo", color: "#6B7285" },
+  { id: "pulse", min: 50, label_fr: "Pulse", label_en: "Pulse", color: "#FF4F1A" },
   { id: "beacon", min: 150, label_fr: "Balise", label_en: "Beacon", color: "#2563EB" },
-  { id: "orbit", min: 350, label_fr: "Orbite", label_en: "Orbit", color: "#A78BFA" },
-  { id: "nova", min: 700, label_fr: "Nova", label_en: "Nova", color: "#F59E0B" },
-  { id: "legend", min: 1200, label_fr: "Légende", label_en: "Legend", color: "#F43F5E" },
+  { id: "orbit", min: 350, label_fr: "Orbite", label_en: "Orbit", color: "#0D9488" },
+  { id: "nova", min: 700, label_fr: "Nova", label_en: "Nova", color: "#D97706" },
+  { id: "legend", min: 1200, label_fr: "Légende", label_en: "Legend", color: "#DC2626" },
 ];
 
 export const SIGNAL_REWARDS = {

@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isFeedMobile = pathname === "/feed";
+  const isFeed = pathname === "/feed";
   const isReels = pathname.startsWith("/reels");
   const isChat = /^\/messages\/[^/]+$/.test(pathname);
   const isBare =
@@ -21,13 +21,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         {!isBare && <SideNav />}
         <main
           className={cn(
-            "flex-1 bg-playce-dark",
+            "flex-1 bg-canvas",
             isReels || isChat
               ? "min-h-[100dvh] p-0 md:min-h-[calc(100dvh-3.5rem)]"
-              : isFeedMobile
-                ? "min-h-[100dvh] p-0 md:min-h-[calc(100dvh-3.5rem)] md:pb-8"
-                : isBare
-                  ? "min-h-[100dvh]"
+              : isBare
+                ? "min-h-[100dvh]"
+                : isFeed
+                  ? "min-h-[100dvh] md:min-h-[calc(100dvh-3.5rem)]"
                   : "min-h-[calc(100dvh-3.5rem)] pb-28 md:pb-8"
           )}
         >

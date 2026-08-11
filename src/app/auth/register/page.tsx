@@ -27,7 +27,7 @@ export default function RegisterPage() {
   return (
     <div className="mx-auto flex min-h-[80dvh] max-w-md flex-col justify-center px-4 py-8">
       <div className="mb-8 text-center">
-        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-playce-teal font-display text-xl font-bold text-playce-black">
+        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-playce-teal text-xl font-bold text-white">
           P
         </div>
         <h1 className="font-display text-2xl font-bold">{t("auth.register")}</h1>

@@ -57,7 +57,7 @@ export function MatchBreakdown({
                 "flex h-5 w-5 items-center justify-center rounded-full",
                 item.matched
                   ? "bg-playce-teal/20 text-playce-teal"
-                  : "bg-white/5 text-slate-muted"
+                  : "bg-canvas text-slate-muted"
               )}
             >
               {item.matched ? (
@@ -66,7 +66,7 @@ export function MatchBreakdown({
                 <X className="h-3 w-3" />
               )}
             </span>
-            <span className="flex-1 text-white/90">{t(`match.reasons.${item.key}`)}</span>
+            <span className="flex-1 text-ink/80">{t(`match.reasons.${item.key}`)}</span>
             <span
               className={cn(
                 "tabular-nums font-medium",

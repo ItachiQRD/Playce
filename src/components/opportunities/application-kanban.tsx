@@ -111,7 +111,7 @@ export function ApplicationKanban({
         {COLUMNS.map((status) => (
           <div
             key={status}
-            className="w-64 shrink-0 rounded-2xl border border-white/10 bg-surface/60 p-2"
+            className="w-64 shrink-0 rounded-2xl border border-[var(--border)] bg-surface/60 p-2"
             onDragOver={(e) => e.preventDefault()}
             onDrop={(e) => {
               e.preventDefault();

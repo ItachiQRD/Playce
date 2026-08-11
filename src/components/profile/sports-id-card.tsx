@@ -124,7 +124,7 @@ export function SportsIdCard({
                 <p className="text-sm text-slate-muted">@{profile.handle}</p>
               </div>
             </div>
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-ink/70">
               {[
                 pos ? (locale === "fr" ? pos.name_fr : pos.name_en) : null,
                 lvl ? (locale === "fr" ? lvl.name_fr : lvl.name_en) : null,

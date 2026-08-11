@@ -153,8 +153,8 @@ export default function OpportunitiesPage() {
             onClick={() => setTab(key)}
             className={`rounded-full px-4 py-1.5 text-sm transition ${
               tab === key
-                ? "bg-playce-teal text-playce-black"
-                : "bg-white/5 text-slate-muted hover:text-white"
+                ? "bg-playce-teal text-white"
+                : "bg-canvas text-slate-muted hover:text-ink"
             }`}
           >
             {label}
@@ -182,19 +182,19 @@ export default function OpportunitiesPage() {
       {filtersOpen && (
         <div className="fixed inset-0 z-[70] md:hidden">
           <button
-            className="absolute inset-0 bg-black/70"
+            className="absolute inset-0 bg-ink/40"
             onClick={() => setFiltersOpen(false)}
             aria-label="Close"
           />
-          <div className="absolute inset-x-0 bottom-0 max-h-[85dvh] overflow-y-auto rounded-t-[28px] border border-white/10 bg-playce-dark px-4 pb-8 pt-3 safe-bottom">
-            <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-white/20" />
+          <div className="safe-bottom absolute inset-x-0 bottom-0 max-h-[85dvh] overflow-y-auto rounded-t-[28px] border border-[var(--border)] bg-surface px-4 pb-8 pt-3 shadow-2xl">
+            <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-ink/15" />
             <div className="mb-4 flex items-center justify-between">
               <h2 className="font-display text-lg font-semibold">
                 {t("opportunities.filters")}
               </h2>
               <button
                 onClick={() => setFiltersOpen(false)}
-                className="rounded-full bg-white/5 p-2"
+                className="rounded-full bg-canvas p-2"
               >
                 <X className="h-5 w-5" />
               </button>

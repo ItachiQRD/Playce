@@ -20,7 +20,7 @@ export default function LoginPage() {
   return (
     <div className="mx-auto flex min-h-[80dvh] max-w-md flex-col justify-center px-4 py-8">
       <div className="mb-8 text-center">
-        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-playce-teal font-display text-xl font-bold text-playce-black">
+        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-playce-teal text-xl font-bold text-white">
           P
         </div>
         <h1 className="font-display text-2xl font-bold">{t("auth.login")}</h1>
@@ -79,7 +79,7 @@ export default function LoginPage() {
                   loginAs(p.id);
                   router.push(p.role === "admin" ? "/admin" : "/feed");
                 }}
-                className="flex items-center gap-3 rounded-2xl border border-white/10 bg-surface px-3 py-2 text-left transition hover:border-playce-teal/40"
+                className="flex items-center gap-3 rounded-2xl border border-[var(--border)] bg-surface px-3 py-2 text-left transition hover:border-playce-teal/40"
               >
                 <Avatar src={p.avatar_url} name={p.full_name} size="sm" />
                 <div>

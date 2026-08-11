@@ -47,7 +47,7 @@ export default function ConversationPage() {
 
   return (
     <div className="chat-shell mx-auto flex w-full max-w-xl flex-col overflow-hidden bg-playce-dark">
-      <div className="safe-top flex shrink-0 items-center gap-3 border-b border-white/10 px-4 py-3">
+      <div className="safe-top flex shrink-0 items-center gap-3 border-b border-[var(--border)] bg-surface px-4 py-3">
         <Link href="/messages" className="rounded-lg p-1.5 hover:bg-white/5">
           <ArrowLeft className="h-5 w-5" />
         </Link>
@@ -71,14 +71,14 @@ export default function ConversationPage() {
               <div
                 className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
                   mine
-                    ? "bg-playce-teal text-playce-black"
-                    : "border border-white/10 bg-surface"
+                    ? "bg-playce-teal text-white"
+                    : "border border-[var(--border)] bg-canvas"
                 }`}
               >
                 <p className="break-words whitespace-pre-wrap">{m.content}</p>
                 <p
                   className={`mt-1.5 text-[10px] ${
-                    mine ? "text-playce-black/60" : "text-slate-muted"
+                    mine ? "text-white/70" : "text-slate-muted"
                   }`}
                 >
                   {formatRelativeDate(m.created_at, locale)}
@@ -97,17 +97,17 @@ export default function ConversationPage() {
           sendMessage(params.id, text.trim());
           setText("");
         }}
-        className="safe-bottom flex shrink-0 gap-2 border-t border-white/10 bg-playce-dark px-3 py-3"
+        className="safe-bottom flex shrink-0 gap-2 border-t border-[var(--border)] bg-surface px-3 py-3"
       >
         <input
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder={t("messages.placeholder")}
-          className="min-w-0 flex-1 rounded-2xl border border-white/10 bg-surface px-4 py-3 text-sm outline-none focus:border-playce-teal/50"
+          className="min-w-0 flex-1 rounded-2xl border border-[var(--border)] bg-canvas px-4 py-3 text-sm outline-none focus:border-playce-teal/50"
         />
         <button
           type="submit"
-          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-playce-teal text-playce-black"
+          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-playce-teal text-white"
           aria-label="Send"
         >
           <Send className="h-5 w-5" />

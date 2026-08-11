@@ -19,14 +19,14 @@ export function DemoSwitcher() {
   );
 
   return (
-    <div className="fixed bottom-20 right-3 z-[60] md:bottom-6 md:right-6">
+    <div className="fixed bottom-24 right-3 z-[60] md:bottom-6 md:right-6">
       {open && (
-        <div className="mb-2 w-64 overflow-hidden rounded-2xl border border-playce-teal/40 bg-playce-black/95 shadow-2xl backdrop-blur-xl">
-          <div className="flex items-center justify-between border-b border-white/10 px-3 py-2">
-            <p className="text-xs font-semibold text-playce-teal">Mode démo — changer de rôle</p>
+        <div className="mb-2 w-64 overflow-hidden rounded-3xl border border-[var(--border)] bg-surface shadow-xl">
+          <div className="flex items-center justify-between border-b border-[var(--border)] px-3 py-2.5">
+            <p className="text-xs font-semibold text-playce-teal">Mode démo</p>
             <button
               onClick={() => setOpen(false)}
-              className="rounded-lg p-1 text-slate-muted hover:text-white"
+              className="rounded-lg p-1 text-slate-muted hover:text-ink"
               aria-label="Fermer"
             >
               <X className="h-4 w-4" />
@@ -41,8 +41,8 @@ export function DemoSwitcher() {
                     setOpen(false);
                     router.push(p.role === "admin" ? "/admin" : "/feed");
                   }}
-                  className={`flex w-full items-center gap-2 rounded-xl px-2 py-2 text-left text-sm transition hover:bg-white/5 ${
-                    auth.user?.id === p.id ? "bg-playce-teal/15 text-playce-teal" : ""
+                  className={`flex w-full items-center gap-2 rounded-2xl px-2 py-2 text-left text-sm transition hover:bg-canvas ${
+                    auth.user?.id === p.id ? "bg-playce-teal/10 text-playce-teal" : ""
                   }`}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -53,7 +53,7 @@ export function DemoSwitcher() {
                   />
                   <span className="min-w-0">
                     <span className="block truncate font-medium">{p.full_name}</span>
-                    <span className="block text-[10px] text-slate-muted capitalize">
+                    <span className="block text-[10px] capitalize text-slate-muted">
                       {p.role}
                     </span>
                   </span>
@@ -65,7 +65,7 @@ export function DemoSwitcher() {
       )}
       <button
         onClick={() => setOpen((o) => !o)}
-        className="flex items-center gap-2 rounded-full bg-playce-teal px-4 py-2.5 text-sm font-semibold text-playce-black shadow-[0_0_24px_rgba(0,184,148,0.45)] transition hover:scale-105"
+        className="flex items-center gap-2 rounded-full bg-ink px-4 py-2.5 text-sm font-semibold text-white shadow-lg transition active:scale-95"
       >
         <FlaskConical className="h-4 w-4" />
         Demo

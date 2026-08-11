@@ -8,7 +8,7 @@ export function Card({
   return (
     <div
       className={cn(
-        "rounded-3xl border border-white/[0.06] bg-surface p-4",
+        "rounded-3xl border border-[var(--border)] bg-surface p-4 shadow-[0_1px_2px_rgba(12,14,18,0.04)]",
         className
       )}
       {...props}
@@ -24,17 +24,17 @@ export function Badge({
   variant?: "default" | "teal" | "blue" | "success" | "warning" | "danger";
 }) {
   const styles = {
-    default: "bg-white/10 text-white",
-    teal: "bg-playce-teal/15 text-playce-teal",
-    blue: "bg-electric-blue/15 text-electric-blue",
-    success: "bg-success/15 text-success",
-    warning: "bg-warning/15 text-warning",
-    danger: "bg-danger/15 text-danger",
+    default: "bg-surface-2 text-ink/70",
+    teal: "bg-playce-teal/12 text-playce-teal",
+    blue: "bg-electric-blue/10 text-electric-blue",
+    success: "bg-success/12 text-success",
+    warning: "bg-warning/12 text-warning",
+    danger: "bg-danger/12 text-danger",
   };
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium",
+        "inline-flex items-center rounded-lg px-2 py-0.5 text-[11px] font-semibold tracking-wide",
         styles[variant],
         className
       )}
@@ -70,7 +70,7 @@ export function Avatar({
   return (
     <div
       className={cn(
-        "relative shrink-0 overflow-hidden rounded-full bg-surface-2 ring-2 ring-white/10",
+        "relative shrink-0 overflow-hidden rounded-full bg-surface-2 ring-1 ring-[var(--border)]",
         sizes[size],
         className
       )}
@@ -97,9 +97,11 @@ export function EmptyState({
   action?: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-white/10 px-6 py-12 text-center">
-      <h3 className="font-display text-lg font-semibold">{title}</h3>
-      {description && <p className="max-w-sm text-sm text-slate-muted">{description}</p>}
+    <div className="flex flex-col items-center justify-center gap-3 rounded-3xl border border-dashed border-[var(--border)] bg-surface/60 px-6 py-14 text-center">
+      <h3 className="text-lg font-semibold tracking-tight">{title}</h3>
+      {description && (
+        <p className="max-w-sm text-sm text-slate-muted">{description}</p>
+      )}
       {action}
     </div>
   );
@@ -112,11 +114,11 @@ export function CompletenessBar({ value }: { value: number }) {
     <div className="space-y-1.5">
       <div className="flex justify-between text-xs text-slate-muted">
         <span>Complétude du profil</span>
-        <span className="font-semibold text-white">{value}%</span>
+        <span className="font-semibold text-ink">{value}%</span>
       </div>
-      <div className="h-2 overflow-hidden rounded-full bg-white/10">
+      <div className="h-1.5 overflow-hidden rounded-full bg-surface-2">
         <div
-          className={cn("h-full rounded-full transition-all duration-300", color)}
+          className={cn("h-full rounded-full transition-all duration-500", color)}
           style={{ width: `${value}%` }}
         />
       </div>

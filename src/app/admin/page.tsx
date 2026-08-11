@@ -125,8 +125,8 @@ export default function AdminPage() {
             onClick={() => setTab(key)}
             className={`rounded-full px-4 py-1.5 text-sm ${
               tab === key
-                ? "bg-playce-teal text-playce-black"
-                : "bg-white/5 text-slate-muted"
+                ? "bg-playce-teal text-white"
+                : "bg-canvas text-slate-muted"
             }`}
           >
             {label}

@@ -24,7 +24,7 @@ export function MediaUpload({
 
   return (
     <div className="space-y-2">
-      {label && <p className="text-sm font-medium text-white/90">{label}</p>}
+      {label && <p className="text-sm font-medium text-ink/80">{label}</p>}
       <input
         ref={inputRef}
         type="file"
@@ -48,7 +48,7 @@ export function MediaUpload({
       />
 
       {value ? (
-        <div className="relative overflow-hidden rounded-2xl border border-white/10">
+        <div className="relative overflow-hidden rounded-2xl border border-[var(--border)]">
           {isVideo ? (
             <video src={value} className="aspect-video w-full object-cover" controls muted />
           ) : (
@@ -70,7 +70,7 @@ export function MediaUpload({
           disabled={loading}
           onClick={() => inputRef.current?.click()}
           className={cn(
-            "flex w-full flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-white/20 bg-playce-black/40 px-4 py-8 text-sm text-slate-muted transition hover:border-playce-teal/40 hover:text-white",
+            "flex w-full flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-[var(--border)] bg-canvas px-4 py-8 text-sm text-slate-muted transition hover:border-playce-teal/40 hover:text-ink",
             loading && "opacity-50"
           )}
         >

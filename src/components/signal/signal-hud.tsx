@@ -20,7 +20,7 @@ export function SignalToast() {
 
   return (
     <div className="pointer-events-none fixed left-1/2 top-20 z-[80] -translate-x-1/2 md:top-24">
-      <div className="animate-signal-pop rounded-full bg-playce-teal px-4 py-2 font-display text-sm font-bold text-playce-black shadow-[0_0_30px_rgba(0,184,148,0.5)]">
+      <div className="animate-signal-pop rounded-full bg-playce-teal px-4 py-2 text-sm font-bold text-white shadow-[0_8px_30px_rgba(255,79,26,0.4)]">
         +{lastSignalGain} Signal
       </div>
     </div>
@@ -38,14 +38,14 @@ export function SignalHud({ compact = false }: { compact?: boolean }) {
     return (
       <Link
         href="/profile?tab=signal"
-        className="flex items-center gap-1.5 rounded-full border border-white/10 bg-black/45 py-1 pl-1 pr-2.5 backdrop-blur-xl transition hover:border-playce-teal/40"
+        className="flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-surface py-1 pl-1 pr-2.5 transition hover:border-playce-teal/30"
         aria-label="Signal"
       >
         <div
           className="signal-ring relative flex h-8 w-8 items-center justify-center rounded-full p-[2px]"
           style={{ ["--p" as string]: progress }}
         >
-          <div className="flex h-full w-full items-center justify-center rounded-full bg-playce-black text-[10px] font-bold text-playce-teal">
+          <div className="flex h-full w-full items-center justify-center rounded-full bg-surface text-[10px] font-bold text-playce-teal">
             {signal.points}
           </div>
         </div>
@@ -60,13 +60,13 @@ export function SignalHud({ compact = false }: { compact?: boolean }) {
   return (
     <Link
       href="/profile?tab=signal"
-      className="flex items-center gap-2 rounded-full border border-white/10 bg-black/45 px-2.5 py-1.5 backdrop-blur-xl transition hover:border-playce-teal/40"
+      className="flex items-center gap-2 rounded-full border border-[var(--border)] bg-surface px-2.5 py-1.5 transition hover:border-playce-teal/30"
     >
       <div
         className="signal-ring relative flex h-9 w-9 items-center justify-center rounded-full p-[2px]"
         style={{ ["--p" as string]: progress }}
       >
-        <div className="flex h-full w-full items-center justify-center rounded-full bg-playce-black text-[10px] font-bold text-playce-teal">
+        <div className="flex h-full w-full items-center justify-center rounded-full bg-surface text-[10px] font-bold text-playce-teal">
           {signal.points}
         </div>
       </div>
@@ -78,7 +78,7 @@ export function SignalHud({ compact = false }: { compact?: boolean }) {
           <Flame className="h-3 w-3 text-warning" />
           {signal.streak}d
           {next && (
-            <span className="text-white/30">
+            <span className="text-ink/30">
               · {next.min - signal.points}→
               {locale === "fr" ? next.label_fr : next.label_en}
             </span>

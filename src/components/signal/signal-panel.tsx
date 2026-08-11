@@ -22,8 +22,8 @@ export function SignalPanel() {
             className="signal-ring flex h-20 w-20 items-center justify-center rounded-full p-[3px]"
             style={{ ["--p" as string]: progress }}
           >
-            <div className="flex h-full w-full flex-col items-center justify-center rounded-full bg-playce-black">
-              <span className="font-display text-xl font-bold text-playce-teal">
+            <div className="flex h-full w-full flex-col items-center justify-center rounded-full bg-canvas">
+              <span className="text-xl font-bold text-playce-teal">
                 {signal.points}
               </span>
               <span className="text-[9px] uppercase text-slate-muted">Signal</span>
@@ -39,7 +39,7 @@ export function SignalPanel() {
               {locale === "fr" ? "jours de série" : "day streak"}
             </p>
             {next && (
-              <p className="mt-1 text-xs text-white/50">
+              <p className="mt-1 text-xs text-slate-muted">
                 {next.min - signal.points}{" "}
                 {locale === "fr" ? "pts vers" : "pts to"}{" "}
                 {locale === "fr" ? next.label_fr : next.label_en}
@@ -66,7 +66,7 @@ export function SignalPanel() {
           return (
             <div key={q.id} className="space-y-1.5">
               <div className="flex justify-between text-xs">
-                <span className={done ? "text-playce-teal" : "text-white/80"}>
+                <span className={done ? "text-playce-teal" : "text-ink/70"}>
                   {locale === "fr" ? q.label_fr : q.label_en}
                 </span>
                 <span className="text-slate-muted">

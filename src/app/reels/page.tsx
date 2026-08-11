@@ -129,7 +129,7 @@ export default function ReelsPage() {
                 <BadgeCheck className="h-4 w-4 text-playce-teal" />
               )}
             </div>
-            <p className="text-xs text-white/70">@{current.author.handle}</p>
+            <p className="text-xs text-ink/65">@{current.author.handle}</p>
           </div>
         </Link>
         <p className="text-sm leading-relaxed">{current.content}</p>

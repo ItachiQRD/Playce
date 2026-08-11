@@ -1,13 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Outfit } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { AppShell } from "@/components/layout/app-shell";
 
-const outfit = Outfit({
-  variable: "--font-outfit",
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
-    statusBarStyle: "black-translucent",
+    statusBarStyle: "default",
     title: "PLAYCE",
   },
   openGraph: {
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0A0A0B",
+  themeColor: "#F2F3F5",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -41,8 +41,8 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className={`${outfit.variable} h-full`} style={{ colorScheme: "dark" }}>
-      <body className="min-h-full bg-playce-dark font-sans text-white antialiased">
+    <html lang="fr" className={`${jakarta.variable} h-full`} style={{ colorScheme: "light" }}>
+      <body className="min-h-full bg-canvas font-sans text-ink antialiased">
         <Providers>
           <AppShell>{children}</AppShell>
         </Providers>

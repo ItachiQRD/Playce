@@ -39,7 +39,7 @@ export function QuickPublishSheet({
     const type: PostType =
       mode === "reel" ? "reel" : media ? "highlight" : "text";
     createPost({
-      content: content.trim() || (locale === "fr" ? "Nouveau signal ⚡" : "New signal ⚡"),
+      content: content.trim() || (locale === "fr" ? "Nouveau signal" : "New signal"),
       type,
       media_url: media,
       thumbnail_url: media?.startsWith("data:image") ? media : undefined,
@@ -52,24 +52,24 @@ export function QuickPublishSheet({
   return (
     <div className="fixed inset-0 z-[70] md:hidden">
       <button
-        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        className="absolute inset-0 bg-ink/40 backdrop-blur-sm"
         onClick={onClose}
         aria-label="Close"
       />
-      <div className="absolute inset-x-0 bottom-0 animate-slide-card rounded-t-[28px] border border-white/10 bg-playce-black px-4 pb-8 pt-3 safe-bottom">
-        <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-white/20" />
+      <div className="safe-bottom absolute inset-x-0 bottom-0 animate-slide-card rounded-t-[28px] border border-[var(--border)] bg-surface px-4 pb-8 pt-3 shadow-2xl">
+        <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-ink/15" />
         <div className="mb-4 flex items-center justify-between">
           <div>
-            <p className="font-display text-lg font-semibold">
+            <p className="text-lg font-bold tracking-tight">
               {locale === "fr" ? "Partage ton Signal" : "Share your Signal"}
             </p>
-            <p className="text-xs text-playce-teal">
+            <p className="text-xs font-medium text-playce-teal">
               +{mode === "reel" ? 35 : 25} Signal · streak {signal.streak}d
             </p>
           </div>
           <button
             onClick={onClose}
-            className="rounded-full bg-white/5 p-2 text-slate-muted"
+            className="rounded-full bg-canvas p-2 text-slate-muted"
           >
             <X className="h-5 w-5" />
           </button>
@@ -87,10 +87,10 @@ export function QuickPublishSheet({
               key={m.id}
               onClick={() => setMode(m.id)}
               className={cn(
-                "flex flex-1 items-center justify-center gap-1.5 rounded-2xl py-2.5 text-xs font-medium transition",
+                "flex flex-1 items-center justify-center gap-1.5 rounded-2xl py-2.5 text-xs font-semibold transition",
                 mode === m.id
-                  ? "bg-playce-teal text-playce-black"
-                  : "bg-white/5 text-slate-muted"
+                  ? "bg-playce-teal text-white"
+                  : "bg-canvas text-slate-muted"
               )}
             >
               <m.icon className="h-4 w-4" />
@@ -113,7 +113,7 @@ export function QuickPublishSheet({
               ? "Une phrase. Un moment. Sois vu."
               : "One line. One moment. Be seen."
           }
-          className="mb-4 min-h-[88px] w-full resize-none rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm outline-none focus:border-playce-teal/50"
+          className="mb-4 min-h-[88px] w-full resize-none rounded-2xl border border-[var(--border)] bg-canvas px-4 py-3 text-sm outline-none focus:border-playce-teal/40"
         />
 
         {auth.user && auth.user.completeness < 40 ? (

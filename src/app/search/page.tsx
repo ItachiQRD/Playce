@@ -72,7 +72,7 @@ export default function SearchPage() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={t("search.placeholder")}
-          className="w-full rounded-2xl border border-white/10 bg-playce-black/60 py-3 pl-11 pr-4 text-sm outline-none focus:border-playce-teal/50"
+          className="w-full rounded-2xl border border-[var(--border)] bg-surface py-3 pl-11 pr-4 text-sm outline-none focus:border-playce-teal/50"
         />
       </div>
 
@@ -83,8 +83,8 @@ export default function SearchPage() {
             onClick={() => setTab(tabItem.key)}
             className={`rounded-full px-3 py-1 text-sm ${
               tab === tabItem.key
-                ? "bg-playce-teal text-playce-black"
-                : "bg-white/5 text-slate-muted"
+                ? "bg-playce-teal text-white"
+                : "bg-canvas text-slate-muted"
             }`}
           >
             {tabItem.label}

@@ -56,7 +56,7 @@ export default function MessagesPage() {
                     </p>
                   </div>
                   {(c.unread_count ?? 0) > 0 && (
-                    <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-playce-teal px-1 text-[10px] font-bold text-playce-black">
+                    <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-playce-teal px-1 text-[10px] font-bold text-white">
                       {c.unread_count}
                     </span>
                   )}

@@ -16,7 +16,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ className, label, error, hint, id, ...props }, ref) => (
     <div className="w-full space-y-1.5">
       {label && (
-        <label htmlFor={id} className="block text-sm font-medium text-white/90">
+        <label htmlFor={id} className="block text-sm font-medium text-ink/80">
           {label}
         </label>
       )}
@@ -24,8 +24,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         ref={ref}
         id={id}
         className={cn(
-          "w-full rounded-2xl border bg-playce-black/60 px-4 py-3 text-sm text-white placeholder:text-slate-muted outline-none transition focus:border-playce-teal/60 focus:ring-2 focus:ring-playce-teal/20",
-          error ? "border-danger" : "border-white/10",
+          "w-full rounded-2xl border bg-surface px-4 py-3 text-sm text-ink placeholder:text-slate-muted outline-none transition focus:border-playce-teal/50 focus:ring-2 focus:ring-playce-teal/15",
+          error ? "border-danger" : "border-[var(--border)]",
           className
         )}
         {...props}
@@ -46,7 +46,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className, label, error, id, ...props }, ref) => (
     <div className="w-full space-y-1.5">
       {label && (
-        <label htmlFor={id} className="block text-sm font-medium text-white/90">
+        <label htmlFor={id} className="block text-sm font-medium text-ink/80">
           {label}
         </label>
       )}
@@ -54,8 +54,8 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         ref={ref}
         id={id}
         className={cn(
-          "w-full min-h-[100px] rounded-2xl border bg-playce-black/60 px-4 py-3 text-sm text-white placeholder:text-slate-muted outline-none transition focus:border-playce-teal/60 focus:ring-2 focus:ring-playce-teal/20 resize-y",
-          error ? "border-danger" : "border-white/10",
+          "w-full min-h-[100px] resize-y rounded-2xl border bg-surface px-4 py-3 text-sm text-ink placeholder:text-slate-muted outline-none transition focus:border-playce-teal/50 focus:ring-2 focus:ring-playce-teal/15",
+          error ? "border-danger" : "border-[var(--border)]",
           className
         )}
         {...props}
@@ -76,7 +76,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
   ({ className, label, error, id, options, ...props }, ref) => (
     <div className="w-full space-y-1.5">
       {label && (
-        <label htmlFor={id} className="block text-sm font-medium text-white/90">
+        <label htmlFor={id} className="block text-sm font-medium text-ink/80">
           {label}
         </label>
       )}
@@ -84,14 +84,14 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
         ref={ref}
         id={id}
         className={cn(
-          "w-full rounded-2xl border bg-playce-black/60 px-4 py-3 text-sm text-white outline-none transition focus:border-playce-teal/60 focus:ring-2 focus:ring-playce-teal/20",
-          error ? "border-danger" : "border-white/10",
+          "w-full rounded-2xl border bg-surface px-4 py-3 text-sm text-ink outline-none transition focus:border-playce-teal/50 focus:ring-2 focus:ring-playce-teal/15",
+          error ? "border-danger" : "border-[var(--border)]",
           className
         )}
         {...props}
       >
         {options.map((o) => (
-          <option key={o.value} value={o.value} className="bg-playce-dark">
+          <option key={o.value} value={o.value} className="bg-surface text-ink">
             {o.label}
           </option>
         ))}

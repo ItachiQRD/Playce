@@ -4,8 +4,8 @@
   "description": "The Digital Infrastructure of Sport — Where Sport Meets Opportunity",
   "start_url": "/feed",
   "display": "standalone",
-  "background_color": "#0F172A",
-  "theme_color": "#0F172A",
+  "background_color": "#F2F3F5",
+  "theme_color": "#F2F3F5",
   "orientation": "portrait-primary",
   "icons": [
     {

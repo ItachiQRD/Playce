@@ -83,7 +83,7 @@ export default function OpportunityDetailPage() {
       <div className="space-y-3">
         <Link
           href="/opportunities"
-          className="inline-flex items-center gap-1.5 text-sm text-slate-muted transition hover:text-white md:hidden"
+          className="inline-flex items-center gap-1.5 text-sm text-slate-muted transition hover:text-ink md:hidden"
         >
           <ArrowLeft className="h-4 w-4" />
           {t("opportunities.title")}
@@ -211,7 +211,7 @@ export default function OpportunityDetailPage() {
 
       {/* Sticky mobile CTA — above floating nav */}
       {!isOwner && auth.user && (
-        <div className="sticky-above-nav fixed inset-x-0 z-40 border-t border-white/10 bg-playce-dark/95 px-4 py-3 backdrop-blur md:hidden">
+        <div className="sticky-above-nav fixed inset-x-0 z-40 border-t border-[var(--border)] bg-surface/95 px-4 py-3 backdrop-blur md:hidden">
           {hasApplied ? (
             <Button className="w-full" variant="secondary" onClick={contactAuthor}>
               {t("opportunities.contact")}
@@ -234,12 +234,12 @@ export default function OpportunityDetailPage() {
       {applyOpen && (
         <div className="fixed inset-0 z-[70] md:hidden">
           <button
-            className="absolute inset-0 bg-black/70"
+            className="absolute inset-0 bg-ink/40"
             onClick={() => setApplyOpen(false)}
             aria-label="Close"
           />
-          <div className="safe-bottom absolute inset-x-0 bottom-0 max-h-[85dvh] overflow-y-auto rounded-t-[28px] border border-white/10 bg-playce-dark px-4 pb-8 pt-3">
-            <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-white/20" />
+          <div className="safe-bottom absolute inset-x-0 bottom-0 max-h-[85dvh] overflow-y-auto rounded-t-[28px] border border-[var(--border)] bg-surface px-4 pb-8 pt-3 shadow-2xl">
+            <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-ink/15" />
             <div className="mb-4 flex items-center justify-between">
               <h2 className="font-display text-lg font-semibold">
                 {t("common.apply")}

@@ -80,7 +80,7 @@ export function SportsIdView({
               src={profile.avatar_url}
               name={profile.full_name}
               size="xl"
-              className="ring-4 ring-playce-dark"
+              className="ring-4 ring-canvas"
             />
             <div className="pb-1">
               <div className="flex items-center gap-2">
@@ -198,7 +198,7 @@ export function SportsIdView({
         )}
 
         {profile.bio && (
-          <p className="mt-4 text-sm leading-relaxed text-white/90">{profile.bio}</p>
+          <p className="mt-4 text-sm leading-relaxed text-ink/80">{profile.bio}</p>
         )}
 
         {profile.goals && (
@@ -253,7 +253,7 @@ export function SportsIdView({
                     {e.is_current ? t("common.present") : e.end_date?.slice(0, 4)}
                   </p>
                   {e.description && (
-                    <p className="mt-2 text-sm text-white/80">{e.description}</p>
+                    <p className="mt-2 text-sm text-ink/70">{e.description}</p>
                   )}
                 </Card>
               ))}

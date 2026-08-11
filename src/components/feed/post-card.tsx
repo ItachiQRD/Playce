@@ -9,18 +9,17 @@ import {
   BadgeCheck,
   Flag,
 } from "lucide-react";
-import { Avatar, Badge } from "@/components/ui/card";
+import { Avatar } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, Textarea } from "@/components/ui/input";
 import { useDemo } from "@/lib/demo-store";
 import type { Post } from "@/lib/types";
-import { formatRelativeDate } from "@/lib/utils";
+import { cn, formatRelativeDate } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n";
 import { useState } from "react";
 import { track } from "@/lib/analytics";
-import { cn } from "@/lib/utils";
 
-export function PostCard({ post }: { post: Post }) {
+export function PostCard({ post, index = 0 }: { post: Post; index?: number }) {
   const { toggleLike, addComment, comments, createReport } = useDemo();
   const { locale, t } = useI18n();
   const [showComments, setShowComments] = useState(false);
@@ -39,16 +38,16 @@ export function PostCard({ post }: { post: Post }) {
     post.media_url?.startsWith("data:video") || post.media_url?.endsWith(".mp4");
 
   return (
-    <article className="bg-transparent">
-      <div className="flex items-center justify-between gap-3 px-4 pt-5 pb-3">
-        <Link
-          href={`/p/${author.handle}`}
-          className="flex min-w-0 items-center gap-3"
-        >
+    <article
+      className="animate-soft-in overflow-hidden border-b border-[var(--border)] bg-surface"
+      style={{ animationDelay: `${Math.min(index, 6) * 0.06}s` }}
+    >
+      <div className="relative flex items-center justify-between gap-3 px-4 pt-4">
+        <Link href={`/p/${author.handle}`} className="flex min-w-0 items-center gap-3">
           <Avatar src={author.avatar_url} name={author.full_name} />
           <div className="min-w-0">
             <div className="flex items-center gap-1.5">
-              <p className="truncate text-[15px] font-semibold tracking-tight">
+              <p className="truncate text-sm font-semibold tracking-tight">
                 {author.full_name}
               </p>
               {author.identity_verified && (
@@ -63,15 +62,15 @@ export function PostCard({ post }: { post: Post }) {
         <div className="relative">
           <button
             onClick={() => setMenuOpen((o) => !o)}
-            className="rounded-full p-2 text-slate-muted hover:bg-white/5"
+            className="rounded-full p-2 text-slate-muted hover:bg-ink/[0.04]"
             aria-label="More"
           >
             <MoreHorizontal className="h-5 w-5" />
           </button>
           {menuOpen && (
-            <div className="absolute right-0 z-20 mt-1 w-44 overflow-hidden rounded-2xl border border-white/10 bg-surface-2 shadow-2xl">
+            <div className="absolute right-0 z-20 mt-1 w-40 overflow-hidden rounded-2xl border border-[var(--border)] bg-surface shadow-lg">
               <button
-                className="flex w-full items-center gap-2 px-3 py-2.5 text-left text-sm text-danger hover:bg-white/5"
+                className="flex w-full items-center gap-2 px-3 py-2.5 text-left text-sm text-danger hover:bg-ink/[0.04]"
                 onClick={() => {
                   setMenuOpen(false);
                   setReportOpen(true);
@@ -86,7 +85,7 @@ export function PostCard({ post }: { post: Post }) {
       </div>
 
       {post.media_url && (
-        <div className="relative aspect-[4/5] w-full bg-black sm:aspect-[16/10] sm:max-h-[520px]">
+        <div className="relative mt-3 aspect-[4/5] w-full max-h-[70dvh] bg-surface-2 sm:aspect-[16/10] sm:max-h-none">
           {isVideo ? (
             <video
               src={post.media_url}
@@ -106,56 +105,70 @@ export function PostCard({ post }: { post: Post }) {
         </div>
       )}
 
-      <div className="space-y-3 px-4 pt-3 pb-5">
+      <div className="space-y-3 px-4 py-3">
         <div className="flex items-center gap-1">
           <button
             onClick={() => toggleLike(post.id)}
-            className={cn(
-              "flex items-center gap-1.5 rounded-full px-2.5 py-2 text-sm transition active:scale-95",
-              post.liked_by_me ? "text-danger" : "text-white/70 hover:text-white"
-            )}
+            className="rounded-full p-2 text-ink transition hover:bg-ink/[0.04] active:scale-90"
             aria-label="Like"
           >
             <Heart
-              className={cn("h-[22px] w-[22px]", post.liked_by_me && "fill-danger")}
+              className={cn(
+                "h-6 w-6",
+                post.liked_by_me && "fill-playce-teal text-playce-teal"
+              )}
             />
-            <span className="tabular-nums">{post.likes_count}</span>
           </button>
           <button
             onClick={() => setShowComments((s) => !s)}
-            className="flex items-center gap-1.5 rounded-full px-2.5 py-2 text-sm text-white/70 transition hover:text-white active:scale-95"
+            className="rounded-full p-2 text-ink transition hover:bg-ink/[0.04] active:scale-90"
+            aria-label="Comment"
           >
-            <MessageCircle className="h-[22px] w-[22px]" />
-            <span className="tabular-nums">{post.comments_count}</span>
+            <MessageCircle className="h-6 w-6" />
           </button>
           <button
-            className="ml-auto rounded-full p-2 text-white/70 hover:text-white"
+            className="rounded-full p-2 text-ink transition hover:bg-ink/[0.04] active:scale-90"
             aria-label="Share"
           >
-            <Share2 className="h-5 w-5" />
+            <Share2 className="h-6 w-6" />
           </button>
         </div>
 
-        <div className="space-y-2">
-          <Badge variant="teal" className="rounded-md px-2 py-0.5 text-[10px] uppercase tracking-wide">
-            {post.type}
-          </Badge>
-          <p className="text-[15px] leading-relaxed text-white/90">
-            <Link href={`/p/${author.handle}`} className="font-semibold">
+        {post.likes_count > 0 && (
+          <p className="text-sm font-semibold tabular-nums">
+            {post.likes_count} like{post.likes_count > 1 ? "s" : ""}
+          </p>
+        )}
+
+        <div className="space-y-1">
+          <p className="text-[15px] leading-relaxed">
+            <Link
+              href={`/p/${author.handle}`}
+              className="mr-1.5 font-semibold tracking-tight"
+            >
               {author.handle}
-            </Link>{" "}
-            <span className="whitespace-pre-wrap font-normal">{post.content}</span>
+            </Link>
+            {post.content}
           </p>
           {post.hashtags.length > 0 && (
-            <p className="text-sm text-playce-teal/90">
-              {post.hashtags.map((h) => `#${h}`).join("  ")}
+            <p className="text-sm text-playce-teal">
+              {post.hashtags.map((h) => `#${h}`).join(" ")}
             </p>
           )}
         </div>
+
+        {post.comments_count > 0 && !showComments && (
+          <button
+            onClick={() => setShowComments(true)}
+            className="text-sm text-slate-muted"
+          >
+            Voir les {post.comments_count} commentaires
+          </button>
+        )}
       </div>
 
       {showComments && (
-        <div className="space-y-3 border-t border-white/[0.05] px-4 py-4">
+        <div className="space-y-3 border-t border-[var(--border)] px-4 py-3">
           {postComments.map((c) => (
             <div key={c.id} className="flex gap-2.5">
               <Avatar
@@ -163,11 +176,11 @@ export function PostCard({ post }: { post: Post }) {
                 name={c.author?.full_name ?? "?"}
                 size="sm"
               />
-              <div className="min-w-0 flex-1 rounded-2xl bg-white/[0.04] px-3 py-2 text-sm">
-                <p className="text-xs font-medium text-slate-muted">
-                  {c.author?.full_name}
+              <div className="min-w-0 flex-1">
+                <p className="text-sm leading-snug">
+                  <span className="font-semibold">{c.author?.full_name}</span>{" "}
+                  {c.content}
                 </p>
-                <p className="text-white/90">{c.content}</p>
               </div>
             </div>
           ))}
@@ -184,11 +197,12 @@ export function PostCard({ post }: { post: Post }) {
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               placeholder={t("feed.comment")}
-              className="min-w-0 flex-1 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm outline-none focus:border-playce-teal/40"
+              className="flex-1 rounded-full border border-[var(--border)] bg-canvas px-4 py-2.5 text-sm outline-none focus:border-playce-teal/40"
             />
             <button
               type="submit"
-              className="rounded-full bg-playce-teal px-4 py-2 text-sm font-semibold text-playce-black"
+              className="px-2 text-sm font-semibold text-playce-teal disabled:opacity-40"
+              disabled={!comment.trim()}
             >
               {t("feed.send")}
             </button>
@@ -197,7 +211,7 @@ export function PostCard({ post }: { post: Post }) {
       )}
 
       {reportOpen && (
-        <div className="space-y-3 border-t border-white/[0.05] px-4 py-4">
+        <div className="space-y-3 border-t border-[var(--border)] px-4 py-4">
           {reported ? (
             <p className="text-sm text-playce-teal">{t("report.success")}</p>
           ) : (

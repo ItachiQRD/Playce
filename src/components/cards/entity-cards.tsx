@@ -23,7 +23,7 @@ export function ProfileCard({ profile }: { profile: Profile }) {
   const { t, locale } = useI18n();
   return (
     <Link href={`/p/${profile.handle}`}>
-      <Card className="flex items-center gap-3 transition hover:border-playce-teal/30 hover:bg-surface-2">
+      <Card className="flex items-center gap-3 transition hover:border-playce-teal/25 hover:bg-canvas">
         <Avatar src={profile.avatar_url} name={profile.full_name} size="lg" />
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-1">
@@ -66,7 +66,7 @@ export function OpportunityCard({
   const { t, locale } = useI18n();
   return (
     <Link href={`/opportunities/${opportunity.id}`}>
-      <Card className="space-y-3 transition hover:border-playce-teal/30 hover:bg-surface-2">
+      <Card className="space-y-3 transition hover:border-playce-teal/25 hover:bg-canvas">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <div className="flex flex-wrap gap-1.5">
@@ -88,11 +88,11 @@ export function OpportunityCard({
             </p>
           </div>
           {(matchScore ?? opportunity.match_score) != null && (
-            <div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-2xl bg-playce-teal/15 text-playce-teal">
+            <div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-xl bg-electric-blue/15 text-electric-blue">
               <span className="text-sm font-bold tabular-nums">
                 {matchScore ?? opportunity.match_score}
               </span>
-              <span className="text-[9px] uppercase opacity-80">{t("opportunities.match")}</span>
+              <span className="text-[9px] uppercase">{t("opportunities.match")}</span>
             </div>
           )}
         </div>

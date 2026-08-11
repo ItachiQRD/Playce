@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import {
   Briefcase,
-  House,
+  Compass,
   Plus,
   Clapperboard,
   User,
@@ -21,7 +21,7 @@ import { Avatar } from "@/components/ui/card";
 import { QuickPublishSheet } from "@/components/publish/quick-publish-sheet";
 
 const tabs = [
-  { href: "/feed", labelKey: "nav.pulse", fallback: "Home", icon: House },
+  { href: "/feed", labelKey: "nav.pulse", fallback: "Home", icon: Compass },
   { href: "/opportunities", labelKey: "nav.ops", fallback: "Ops", icon: Briefcase },
   { href: "__publish__", labelKey: "nav.publish", fallback: "Publish", icon: Plus },
   { href: "/messages", labelKey: "nav.msgs", fallback: "Msgs", icon: MessageCircle },
@@ -50,16 +50,16 @@ export function BottomNav() {
 
   return (
     <>
-      <nav className="safe-bottom fixed inset-x-0 bottom-0 z-50 md:hidden">
-        <ul className="nav-dock mx-auto flex max-w-lg items-end justify-between bg-playce-dark/95 px-2 pb-1 pt-2 backdrop-blur-xl">
+      <nav className="safe-bottom nav-bar fixed inset-x-0 bottom-0 z-50 border-t border-[var(--border)] bg-surface/95 backdrop-blur-xl md:hidden">
+        <ul className="mx-auto flex h-[4.25rem] max-w-lg items-end justify-between px-2 pb-1">
           {tabs.map(({ href, labelKey, fallback, icon: Icon }) => {
             const label = t(labelKey) !== labelKey ? t(labelKey) : fallback;
             if (href === "__publish__") {
               return (
-                <li key="publish" className="-mt-5">
+                <li key="publish" className="flex flex-1 justify-center">
                   <button
                     onClick={() => setPublishOpen(true)}
-                    className="publish-orb flex h-14 w-14 items-center justify-center rounded-full bg-playce-teal text-playce-black"
+                    className="publish-orb -mt-5 flex h-14 w-14 items-center justify-center rounded-full bg-playce-teal text-white"
                     aria-label={label}
                   >
                     <Plus className="h-7 w-7" strokeWidth={2.5} />
@@ -72,18 +72,18 @@ export function BottomNav() {
               (href !== "/feed" && pathname.startsWith(href));
             const badge = href === "/messages" ? unreadMsgs : 0;
             return (
-              <li key={href} className="flex-1">
+              <li key={href} className="flex flex-1 justify-center">
                 <Link
                   href={href}
                   className={cn(
-                    "relative mx-auto flex max-w-[64px] flex-col items-center gap-0.5 px-1 py-1.5 text-[10px] font-medium transition",
-                    active ? "text-playce-teal" : "text-white/40"
+                    "relative flex min-w-[56px] flex-col items-center gap-0.5 px-2 py-2 text-[10px] font-medium transition",
+                    active ? "text-playce-teal" : "text-slate-muted"
                   )}
                 >
                   <Icon className="h-5 w-5" strokeWidth={active ? 2.4 : 1.8} />
                   <span>{label}</span>
                   {badge > 0 && (
-                    <span className="absolute right-1 top-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-playce-teal px-1 text-[9px] font-bold text-playce-black">
+                    <span className="absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-playce-teal px-1 text-[9px] font-bold text-white">
                       {badge > 9 ? "9+" : badge}
                     </span>
                   )}
@@ -116,47 +116,49 @@ export function TopBar() {
   ).length;
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/[0.05] bg-playce-dark/90 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-[var(--border)] bg-canvas/90 backdrop-blur-xl">
       <div className="safe-top">
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 px-4">
           <Link href="/feed" className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-playce-teal text-sm font-bold text-playce-black">
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-playce-teal text-sm font-extrabold text-white">
               P
             </div>
-            <span className="hidden text-lg font-semibold tracking-tight sm:inline">
+            <span className="hidden text-lg font-bold tracking-tight sm:inline">
               PLAYCE
             </span>
           </Link>
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-0.5">
             <Link
               href="/search"
-              className="rounded-full p-2 text-white/50 transition hover:bg-white/5 hover:text-white"
+              className="rounded-xl p-2.5 text-slate-muted transition hover:bg-ink/[0.04] hover:text-ink"
               aria-label="Search"
             >
               <Search className="h-5 w-5" />
             </Link>
             <Link
               href="/messages"
-              className="hidden rounded-full p-2 text-white/50 transition hover:bg-white/5 hover:text-white md:inline-flex"
+              className="hidden rounded-xl p-2.5 text-slate-muted transition hover:bg-ink/[0.04] hover:text-ink md:inline-flex"
               aria-label="Messages"
             >
               <MessageCircle className="h-5 w-5" />
             </Link>
             <Link
               href="/notifications"
-              className="relative rounded-full p-2 text-white/50 transition hover:bg-white/5 hover:text-white"
+              className="relative rounded-xl p-2.5 text-slate-muted transition hover:bg-ink/[0.04] hover:text-ink"
               aria-label="Notifications"
             >
               <Bell className="h-5 w-5" />
               {unread > 0 && (
-                <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-playce-teal" />
+                <span className="absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-playce-teal px-1 text-[10px] font-bold text-white">
+                  {unread}
+                </span>
               )}
             </Link>
             {auth.user.role === "admin" && (
               <Link
                 href="/admin"
-                className="rounded-full p-2 text-white/50 transition hover:bg-white/5 hover:text-white"
+                className="rounded-xl p-2.5 text-slate-muted transition hover:bg-ink/[0.04] hover:text-ink"
                 aria-label="Admin"
               >
                 <Shield className="h-5 w-5" />
@@ -184,7 +186,7 @@ export function SideNav() {
   if (hide || !auth.user) return null;
 
   const items = [
-    { href: "/feed", label: t("nav.home"), icon: House },
+    { href: "/feed", label: t("nav.home"), icon: Compass },
     { href: "/opportunities", label: t("nav.opportunities"), icon: Briefcase },
     { href: "/messages", label: t("messages.title"), icon: MessageCircle },
     { href: "/publish", label: t("nav.publish"), icon: Plus },
@@ -198,8 +200,8 @@ export function SideNav() {
   ];
 
   return (
-    <aside className="sticky top-14 hidden h-[calc(100dvh-3.5rem)] w-56 shrink-0 border-r border-white/[0.05] p-4 md:block lg:w-64">
-      <nav className="space-y-0.5">
+    <aside className="sticky top-14 hidden h-[calc(100dvh-3.5rem)] w-56 shrink-0 border-r border-[var(--border)] bg-canvas p-4 md:block lg:w-64">
+      <nav className="space-y-1">
         {items.map(({ href, label, icon: Icon }) => {
           const active =
             pathname === href ||
@@ -211,8 +213,8 @@ export function SideNav() {
               className={cn(
                 "flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition",
                 active
-                  ? "bg-playce-teal/15 text-playce-teal"
-                  : "text-white/45 hover:bg-white/[0.04] hover:text-white"
+                  ? "bg-playce-teal/10 text-playce-teal"
+                  : "text-slate-muted hover:bg-ink/[0.04] hover:text-ink"
               )}
             >
               <Icon className="h-5 w-5" />
@@ -221,13 +223,9 @@ export function SideNav() {
           );
         })}
       </nav>
-      <div className="mt-8 rounded-3xl border border-white/[0.06] bg-surface p-4">
-        <p className="text-sm font-semibold tracking-tight">
-          Where Sport Meets Opportunity
-        </p>
-        <p className="mt-1 text-xs text-slate-muted">
-          Be seen. Be found. Raise your Signal.
-        </p>
+      <div className="mt-8 rounded-3xl border border-[var(--border)] bg-surface p-4">
+        <p className="text-sm font-semibold tracking-tight">Where Sport Meets Opportunity</p>
+        <p className="mt-1 text-xs text-slate-muted">Be seen. Be found. Raise your Signal.</p>
       </div>
     </aside>
   );
