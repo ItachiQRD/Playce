@@ -60,7 +60,7 @@ export default function CommentsPage() {
 
   return (
     <div className="chat-shell mx-auto flex w-full max-w-xl flex-col overflow-hidden bg-canvas">
-      <header className="safe-top flex shrink-0 items-center gap-3 border-b border-[var(--border)] bg-surface px-4 py-3">
+      <header className="safe-top glass-strong flex shrink-0 items-center gap-3 px-4 py-3">
         <Link href="/feed" className="rounded-lg p-1 hover:bg-ink/[0.04]">
           <ArrowLeft className="h-5 w-5" />
         </Link>
@@ -73,7 +73,7 @@ export default function CommentsPage() {
       </header>
 
       <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4 overscroll-contain">
-        <Card className="mb-4 rounded-3xl border border-[var(--border)] bg-surface">
+        <Card className="mb-4">
           <div className="flex items-start justify-between gap-3 p-4">
             <div className="flex min-w-0 items-center gap-3">
               <Avatar src={author?.avatar_url} name={author?.full_name ?? "?"} />
@@ -137,7 +137,7 @@ export default function CommentsPage() {
           addComment(post.id, text.trim());
           setText("");
         }}
-        className="safe-bottom flex shrink-0 gap-2 border-t border-[var(--border)] bg-surface px-4 py-3"
+        className="safe-bottom glass-strong flex shrink-0 gap-2 px-4 py-3"
       >
         <Textarea
           value={text}

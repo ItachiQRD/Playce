@@ -211,7 +211,7 @@ export default function OpportunityDetailPage() {
 
       {/* Sticky mobile CTA — above floating nav */}
       {!isOwner && auth.user && (
-        <div className="sticky-above-nav fixed inset-x-0 z-40 border-t border-[var(--border)] bg-surface/95 px-4 py-3 backdrop-blur md:hidden">
+        <div className="sticky-above-nav glass-strong fixed inset-x-0 z-40 px-4 py-3 md:hidden">
           {hasApplied ? (
             <Button className="w-full" variant="secondary" onClick={contactAuthor}>
               {t("opportunities.contact")}
@@ -234,11 +234,11 @@ export default function OpportunityDetailPage() {
       {applyOpen && (
         <div className="fixed inset-0 z-[70] md:hidden">
           <button
-            className="absolute inset-0 bg-ink/40"
+            className="absolute inset-0 bg-ink/40 backdrop-blur-sm"
             onClick={() => setApplyOpen(false)}
             aria-label="Close"
           />
-          <div className="safe-bottom absolute inset-x-0 bottom-0 max-h-[85dvh] overflow-y-auto rounded-t-[28px] border border-[var(--border)] bg-surface px-4 pb-8 pt-3 shadow-2xl">
+          <div className="safe-bottom glass-strong absolute inset-x-0 bottom-0 max-h-[85dvh] overflow-y-auto rounded-t-[28px] px-4 pb-8 pt-3">
             <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-ink/15" />
             <div className="mb-4 flex items-center justify-between">
               <h2 className="font-display text-lg font-semibold">

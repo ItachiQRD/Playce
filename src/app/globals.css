@@ -189,6 +189,68 @@ h4,
   box-shadow: 0 -1px 0 var(--border), 0 -12px 40px rgba(12, 14, 18, 0.06);
 }
 
+/* Glassmorphism surfaces */
+.glass {
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+  backdrop-filter: blur(18px) saturate(1.35);
+  -webkit-backdrop-filter: blur(18px) saturate(1.35);
+  box-shadow:
+    0 1px 0 color-mix(in srgb, #fff 35%, transparent) inset,
+    0 10px 30px rgba(12, 14, 18, 0.06);
+}
+
+.glass-strong {
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+  backdrop-filter: blur(24px) saturate(1.45);
+  -webkit-backdrop-filter: blur(24px) saturate(1.45);
+  box-shadow:
+    0 1px 0 color-mix(in srgb, #fff 40%, transparent) inset,
+    0 16px 40px rgba(12, 14, 18, 0.08);
+}
+
+.glass-chip {
+  background: color-mix(in srgb, var(--surface) 65%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+}
+
+@media (prefers-color-scheme: dark) {
+  .glass,
+  .glass-strong {
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.06) inset,
+      0 12px 36px rgba(0, 0, 0, 0.35);
+  }
+
+  .glass {
+    background: color-mix(in srgb, var(--surface) 55%, transparent);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-strong {
+    background: color-mix(in srgb, var(--surface) 70%, transparent);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  .glass-chip {
+    background: color-mix(in srgb, var(--surface) 50%, transparent);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+@media (min-width: 768px) {
+  .glass-md-clear {
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
 .publish-orb {
   box-shadow: 0 8px 24px rgba(255, 79, 26, 0.35);
   transition: transform 0.2s ease;

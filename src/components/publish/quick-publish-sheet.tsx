@@ -56,7 +56,7 @@ export function QuickPublishSheet({
         onClick={onClose}
         aria-label="Close"
       />
-      <div className="safe-bottom absolute inset-x-0 bottom-0 animate-slide-card rounded-t-[28px] border border-[var(--border)] bg-surface px-4 pb-8 pt-3 shadow-2xl">
+      <div className="safe-bottom glass-strong absolute inset-x-0 bottom-0 animate-slide-card rounded-t-[28px] px-4 pb-8 pt-3">
         <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-ink/15" />
         <div className="mb-4 flex items-center justify-between">
           <div>

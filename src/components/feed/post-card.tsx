@@ -38,7 +38,7 @@ export function PostCard({ post, index = 0 }: { post: Post; index?: number }) {
 
   return (
     <article
-      className="animate-soft-in overflow-hidden border-b border-[var(--border)] bg-surface"
+      className="animate-soft-in overflow-hidden bg-transparent"
       style={{ animationDelay: `${Math.min(index, 6) * 0.06}s` }}
     >
       <div className="relative flex items-center justify-between gap-3 px-4 pt-4">

@@ -51,7 +51,7 @@ export function BottomNav() {
 
   return (
     <>
-      <nav className="safe-bottom nav-bar fixed inset-x-0 bottom-0 z-50 border-t border-[var(--border)] bg-surface/95 backdrop-blur-xl md:hidden">
+      <nav className="safe-bottom nav-bar glass-strong fixed inset-x-0 bottom-0 z-50 md:hidden">
         <ul className="mx-auto flex h-[4.25rem] max-w-lg items-end justify-between px-2 pb-1">
           {tabs.map(({ href, labelKey, fallback, icon: Icon }) => {
             const label = t(labelKey) !== labelKey ? t(labelKey) : fallback;
@@ -107,7 +107,6 @@ export function TopBar() {
     pathname.startsWith("/onboarding") ||
     pathname === "/" ||
     pathname.startsWith("/reels") ||
-    pathname === "/feed" ||
     /^\/comments\/[^/]+$/.test(pathname) ||
     /^\/messages\/[^/]+$/.test(pathname);
 
@@ -118,7 +117,7 @@ export function TopBar() {
   ).length;
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[var(--border)] bg-canvas/90 backdrop-blur-xl">
+    <header className="glass-strong sticky top-0 z-40 border-b border-[var(--border)]">
       <div className="safe-top">
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 px-4">
           <Link href="/feed" className="flex items-center gap-2.5">
@@ -202,7 +201,7 @@ export function SideNav() {
   ];
 
   return (
-    <aside className="sticky top-14 hidden h-[calc(100dvh-3.5rem)] w-56 shrink-0 border-r border-[var(--border)] bg-canvas p-4 md:block lg:w-64">
+    <aside className="glass sticky top-14 hidden h-[calc(100dvh-3.5rem)] w-56 shrink-0 border-r border-[var(--border)] p-4 md:block lg:w-64">
       <nav className="space-y-1">
         {items.map(({ href, label, icon: Icon }) => {
           const active =
@@ -225,7 +224,7 @@ export function SideNav() {
           );
         })}
       </nav>
-      <div className="mt-8 rounded-3xl border border-[var(--border)] bg-surface p-4">
+      <div className="mt-8 glass rounded-3xl p-4">
         <p className="text-sm font-semibold tracking-tight">Where Sport Meets Opportunity</p>
         <p className="mt-1 text-xs text-slate-muted">Be seen. Be found. Raise your Signal.</p>
       </div>

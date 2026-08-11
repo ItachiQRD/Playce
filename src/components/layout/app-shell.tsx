@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isFeed = pathname === "/feed";
   const isReels = pathname.startsWith("/reels");
   const isChat = /^\/messages\/[^/]+$/.test(pathname);
   const isComments = /^\/comments\/[^/]+$/.test(pathname);
@@ -14,6 +13,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     pathname === "/" ||
     pathname.startsWith("/auth") ||
     pathname.startsWith("/onboarding");
+  const isImmersive = isReels || isChat || isComments;
 
   return (
     <>
@@ -23,13 +23,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <main
           className={cn(
             "flex-1 bg-canvas",
-            isReels || isChat || isComments
+            isImmersive
               ? "min-h-[100dvh] p-0 md:min-h-[calc(100dvh-3.5rem)]"
               : isBare
                 ? "min-h-[100dvh]"
-                : isFeed
-                  ? "min-h-[100dvh] md:min-h-[calc(100dvh-3.5rem)]"
-                  : "min-h-[calc(100dvh-3.5rem)] overflow-x-hidden pb-[calc(var(--nav-offset)+0.75rem)] md:pb-8"
+                : "min-h-[calc(100dvh-3.5rem)] overflow-x-hidden pb-[calc(var(--nav-offset)+0.75rem)] md:pb-8"
           )}
         >
           {children}

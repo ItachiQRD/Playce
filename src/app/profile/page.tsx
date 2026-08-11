@@ -21,7 +21,7 @@ function ProfileInner() {
 
   return (
     <div className="py-0 md:py-6">
-      <div className="sticky top-14 z-30 border-b border-[var(--border)] bg-canvas/90 backdrop-blur-xl md:static md:border-0 md:bg-transparent md:backdrop-blur-none">
+      <div className="sticky top-14 z-30 glass glass-md-clear border-b border-[var(--border)] md:static md:border-0">
         <div className="mx-auto flex max-w-3xl gap-2 px-4 py-3">
           <Link
             href="/profile"
@@ -29,7 +29,7 @@ function ProfileInner() {
               "rounded-full px-4 py-1.5 text-sm font-medium",
               tab === "id"
                 ? "bg-playce-teal text-white"
-                : "bg-surface text-slate-muted"
+                : "glass-chip text-slate-muted"
             )}
           >
             Sports ID
@@ -40,7 +40,7 @@ function ProfileInner() {
               "rounded-full px-4 py-1.5 text-sm font-medium",
               tab === "signal"
                 ? "bg-playce-teal text-white"
-                : "bg-surface text-slate-muted"
+                : "glass-chip text-slate-muted"
             )}
           >
             Signal

@@ -38,7 +38,7 @@ export function SignalHud({ compact = false }: { compact?: boolean }) {
     return (
       <Link
         href="/profile?tab=signal"
-        className="flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-surface py-1 pl-1 pr-2.5 transition hover:border-playce-teal/30"
+        className="flex items-center gap-1.5 rounded-full glass-chip py-1 pl-1 pr-2.5 transition hover:border-playce-teal/30"
         aria-label="Signal"
       >
         <div
@@ -60,7 +60,7 @@ export function SignalHud({ compact = false }: { compact?: boolean }) {
   return (
     <Link
       href="/profile?tab=signal"
-      className="flex items-center gap-2 rounded-full border border-[var(--border)] bg-surface px-2.5 py-1.5 transition hover:border-playce-teal/30"
+      className="flex items-center gap-2 rounded-full glass-chip px-2.5 py-1.5 transition hover:border-playce-teal/30"
     >
       <div
         className="signal-ring relative flex h-9 w-9 items-center justify-center rounded-full p-[2px]"

@@ -47,8 +47,8 @@ export default function ConversationPage() {
 
   return (
     <div className="chat-shell mx-auto flex w-full max-w-xl flex-col overflow-hidden bg-playce-dark">
-      <div className="safe-top flex shrink-0 items-center gap-3 border-b border-[var(--border)] bg-surface px-4 py-3">
-        <Link href="/messages" className="rounded-lg p-1.5 hover:bg-white/5">
+      <div className="safe-top glass-strong flex shrink-0 items-center gap-3 px-4 py-3">
+        <Link href="/messages" className="rounded-lg p-1.5 hover:bg-ink/[0.04]">
           <ArrowLeft className="h-5 w-5" />
         </Link>
         <Link href={`/p/${other?.handle}`} className="flex min-w-0 items-center gap-3">
@@ -72,7 +72,7 @@ export default function ConversationPage() {
                 className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
                   mine
                     ? "bg-playce-teal text-white"
-                    : "border border-[var(--border)] bg-canvas"
+                    : "glass-chip"
                 }`}
               >
                 <p className="break-words whitespace-pre-wrap">{m.content}</p>
@@ -97,7 +97,7 @@ export default function ConversationPage() {
           sendMessage(params.id, text.trim());
           setText("");
         }}
-        className="safe-bottom flex shrink-0 gap-2 border-t border-[var(--border)] bg-surface px-3 py-3"
+        className="safe-bottom glass-strong flex shrink-0 gap-2 px-3 py-3"
       >
         <input
           value={text}

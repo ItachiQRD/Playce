@@ -21,7 +21,7 @@ export function DemoSwitcher() {
   return (
     <div className="fixed bottom-24 right-3 z-[60] md:bottom-6 md:right-6">
       {open && (
-        <div className="mb-2 w-64 overflow-hidden rounded-3xl border border-[var(--border)] bg-surface shadow-xl">
+        <div className="mb-2 glass-strong w-64 overflow-hidden rounded-3xl">
           <div className="flex items-center justify-between border-b border-[var(--border)] px-3 py-2.5">
             <p className="text-xs font-semibold text-playce-teal">Mode démo</p>
             <button
